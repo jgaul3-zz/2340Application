@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:text="If you have a username and password:"
         android:textColor="@android:color/black"
-        tools:layout_editor_absoluteX="75dp"
-        tools:layout_editor_absoluteY="151dp" />
+        tools:layout_editor_absoluteX="73dp"
+        tools:layout_editor_absoluteY="148dp" />
 
 </android.support.constraint.ConstraintLayout>
