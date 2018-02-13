@@ -2,6 +2,11 @@ package edu.gatech.cs2340.cs2340application.controllers;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+
+import edu.gatech.cs2340.cs2340application.R;
 
 
 /** Top level window.
@@ -15,6 +20,26 @@ public class OpeningScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_opening_screen);
+
+        //Prep buttons
+        Button userButton = (Button) findViewById(R.id.loginUser);
+        Button guestButton = (Button) findViewById(R.id.loginGuest);
+
+        userButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Log.i("test", "User Button Pressed.");
+            }
+        });
+
+        guestButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Log.i("test", "Guest Button Pressed.");
+            }
+        });
 
 
     }
