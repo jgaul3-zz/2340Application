@@ -22,8 +22,8 @@ public class OpeningScreen extends AppCompatActivity {
         setContentView(R.layout.activity_opening_screen);
 
         //Prep buttons
-        Button userButton = (Button) findViewById(R.id.loginUser);
-        Button guestButton = (Button) findViewById(R.id.loginGuest);
+        Button userButton = findViewById(R.id.loginUser);
+        Button guestButton = findViewById(R.id.loginGuest);
 
         userButton.setOnClickListener(new View.OnClickListener() {
 
