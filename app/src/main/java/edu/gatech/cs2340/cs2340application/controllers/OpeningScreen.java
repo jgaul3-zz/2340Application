@@ -1,5 +1,7 @@
 package edu.gatech.cs2340.cs2340application.controllers;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,16 +25,24 @@ public class OpeningScreen extends AppCompatActivity {
 
         //Prep buttons
         Button userButton = findViewById(R.id.loginUser);
-        Button guestButton = findViewById(R.id.loginGuest);
-
         userButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
+
+                //on a phone, we need to change windows to the detail view
+                Context context = v.getContext();
+
+                //create our new intent with the new screen (activity)
+                Intent intent = new Intent(context, LoginActivity.class);
+
+                //now just display the new window
+                context.startActivity(intent);
                 Log.i("test", "User Button Pressed.");
             }
         });
 
+        Button guestButton = findViewById(R.id.loginGuest);
         guestButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -40,6 +50,10 @@ public class OpeningScreen extends AppCompatActivity {
                 Log.i("test", "Guest Button Pressed.");
             }
         });
+
+
+
+
 
 
     }
