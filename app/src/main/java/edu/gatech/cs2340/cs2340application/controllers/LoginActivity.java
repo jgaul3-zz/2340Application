@@ -3,6 +3,7 @@ package edu.gatech.cs2340.cs2340application.controllers;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -102,6 +103,11 @@ public class LoginActivity extends AppCompatActivity {
         String username = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
 
+        if (username.equals("User") && password.equals("Pass"))
+        {
+            Intent toApp = new Intent(LoginActivity.this, AppScreen.class);
+            LoginActivity.this.startActivity(toApp);
+        }
         if (!username.equals("User")){
             Toast.makeText(this, "Incorrect Username", Toast.LENGTH_SHORT).show();
         }
@@ -120,6 +126,12 @@ public class LoginActivity extends AppCompatActivity {
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
         return password.length() > 4;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent toOpen = new Intent(LoginActivity.this, OpeningScreen.class);
+        LoginActivity.this.startActivity(toOpen);
     }
 }
 

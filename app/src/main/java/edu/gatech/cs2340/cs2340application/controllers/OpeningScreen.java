@@ -43,10 +43,16 @@ public class OpeningScreen extends AppCompatActivity {
             public void onClick(View v) {
                 Log.i("test", "Guest Button Pressed.");
 
-                //TODO: connect with shelter screen.
+                Intent toApp = new Intent(OpeningScreen.this, AppScreen.class);
+                OpeningScreen.this.startActivity(toApp);
             }
         });
-
-
     }
+
+    @Override
+    public void onBackPressed() {
+        // Do Here what ever you want do on back press;
+        // Nothing tbh.
+    }
+
 }
