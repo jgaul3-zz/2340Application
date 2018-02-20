@@ -17,6 +17,15 @@ public class Model {
     /** Singleton instance */
     private static final Model _instance = new Model();
     public static Model getInstance() { return _instance; }
+
+    /**List of users. */
+    private List<User> _users;
+
+    /**Currently selected user for admin tasks. */
+    private User _currentUser;
+
+    /**Currently selected shelter for admin tasks. */
+    private Shelter _currentShelter;
 //
 //
 //    /** holds the list of all courses */
