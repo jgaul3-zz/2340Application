@@ -1,5 +1,6 @@
 package edu.gatech.cs2340.cs2340application.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,53 +19,70 @@ public class Model {
     private static final Model _instance = new Model();
     public static Model getInstance() { return _instance; }
 
-    /**List of users. */
+    /** List of users. */
     private List<User> _users;
+
+    /** List of shelters. */
+    private List<Shelter> _shelters;
 
     /**Currently selected user for admin tasks. */
     private User _currentUser;
 
     /**Currently selected shelter for admin tasks. */
     private Shelter _currentShelter;
-//
-//
-//    /** holds the list of all courses */
-//    private List<Course> _courses;
-//
-//    /** the currently selected course, defaults to first course */
-//    private Course _currentCourse;
-//
-//    /** Null Object pattern, returned when no course is found */
-//    private final Course theNullCourse = new Course("No Such Course", "9999", SchoolCode.XX);
-//
-//
-//    /**
-//     * make a new model
-//     */
-//    private Model() {
-//        _courses = new ArrayList<>();
-//
-//        //comment this out after full app developed -- for homework leave in
-//        loadDummyData();
-//
-//    }
-//
-//    /**
-//     * populate the model with some dummy data.  The full app would not require this.
-//     * comment out when adding new courses functionality is present.
-//     */
-//    private void loadDummyData() {
-//        _courses.add(new Course("Objects and Design", "2340", SchoolCode.CS));
-//        _courses.add(new Course( "TQM", "4321", SchoolCode.IE));
-//        _courses.add(new Course("Concrete Ideas", "5432", SchoolCode.AR));
-//        _courses.add(new Course("Calc I", "2213", SchoolCode.MATH));
-//        _courses.get(0).getStudents().add(new Student("Bob", "CS"));
-//        _courses.get(0).getStudents().add(new Student("Sally", "ISYE"));
-//        _courses.get(1).getStudents().add(new Student("Fred", "Math"));
-//        _courses.get(1).getStudents().add(new Student("Edith", "CM"));
-//        _currentCourse = _courses.get(0);
-//    }
-//
+
+    /** Null User when user isn't found. */
+    private final User nullUser = new User("No such user", "No such password");
+
+    /** Null Shelter when shelter isn't found. */
+    private final Shelter nullShelter = new Shelter("Shelter doesn't exist",
+            0, 0, 0, "", "",
+            "");
+
+    private Model() {
+
+        _users = new ArrayList<>();
+        _shelters = new ArrayList<>();
+
+    }
+
+    /** Getters */
+    public List<User> getUsers() { return _users; }
+
+    public List<Shelter> getShelters() { return _shelters; }
+
+    /**
+     * adds a user to the app if they don't already exist.
+     *
+     * @param user the user to be added
+     * @return whether it worked
+     */
+    public boolean addUser(User user) {
+        for (User u : _users )
+        {
+            if (u.equals(user)) return false;
+        }
+
+        _users.add(user);
+        return true;
+    }
+
+    /**
+     * adds a shelter to the app if they don't already exist.
+     *
+     * @param shelter the shelter to be added
+     * @return whether the shelter was added
+     */
+    public boolean addUser(Shelter shelter) {
+        for (Shelter s : _shelters )
+        {
+            if (s.equals(shelter)) return false;
+        }
+
+        _shelters.add(shelter);
+        return true;
+    }
+
 //    /**
 //     * get the courses
 //     * @return a list of the courses in the app
