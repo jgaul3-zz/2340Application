@@ -46,6 +46,12 @@
         <!-- Password Label -->
 
         <!-- Signup Button -->
+        <RadioButton
+            android:id="@+id/adminButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Admin" />
+
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_signup"
             android:layout_width="fill_parent"
@@ -61,13 +67,9 @@
             android:layout_marginBottom="24dp"
             android:text="Already a member? Login"
             android:gravity="center"
-            android:textSize="16dip"/>
-
-        <RadioButton
-            android:id="@+id/adminButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Admin" />
+            android:textSize="16dip"
+            android:clickable="true"
+            />
 
     </LinearLayout>
 </ScrollView>

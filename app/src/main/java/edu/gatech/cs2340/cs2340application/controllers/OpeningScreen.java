@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import edu.gatech.cs2340.cs2340application.R;
+import edu.gatech.cs2340.cs2340application.RegistrationScreen;
 
 
 /** Top level window.
@@ -32,7 +33,7 @@ public class OpeningScreen extends AppCompatActivity {
             public void onClick(View v) {
                 Log.i("test", "User Button Pressed.");
 
-                Intent toLogin = new Intent(OpeningScreen.this, LoginActivity.class);
+                Intent toLogin = new Intent(OpeningScreen.this, RegistrationScreen.class);
                 OpeningScreen.this.startActivity(toLogin);
             }
         });
