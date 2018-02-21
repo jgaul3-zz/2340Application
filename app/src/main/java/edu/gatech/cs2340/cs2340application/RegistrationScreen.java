@@ -14,13 +14,15 @@ import edu.gatech.cs2340.cs2340application.controllers.AppScreen;
 
 public class RegistrationScreen extends AppCompatActivity {
 
-    EditText pass = findViewById(R.id.input_password);
+    EditText pass;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        pass = findViewById(R.id.input_password);
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
