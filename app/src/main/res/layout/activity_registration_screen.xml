@@ -70,5 +70,11 @@
             android:gravity="center"
             android:textSize="16dip"/>
 
+        <RadioButton
+            android:id="@+id/adminButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Admin" />
+
     </LinearLayout>
 </ScrollView>
