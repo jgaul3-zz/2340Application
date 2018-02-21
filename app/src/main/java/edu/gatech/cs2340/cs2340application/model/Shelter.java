@@ -5,6 +5,7 @@ import java.util.List;
 
 /**
  * Created by JGaul on 2/20/18.
+ *
  */
 
 public class Shelter {
@@ -93,7 +94,7 @@ public class Shelter {
      * Makes a new shelter
      */
     public Shelter(String name, int capacity, double latitude, double longitude, String address,
-                   String phoneNumber, String notes, List<String> restrictions) {
+                   String phoneNumber, String notes) {
         _key = Shelter.Next_key++;
         _name = name;
         _capacity = capacity;
@@ -103,7 +104,7 @@ public class Shelter {
         _address = address;
         _phoneNumber = phoneNumber;
         _notes = notes;
-        _restrictions = restrictions;
+        _restrictions = new ArrayList<>();
         _homeless = new ArrayList<>();
         _employees = new ArrayList<>();
     }
@@ -117,4 +118,5 @@ public class Shelter {
         return _name;
     }
 
+    public boolean equals(Shelter shelter) { return _key == shelter.getKey(); }
 }
