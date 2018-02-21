@@ -32,6 +32,10 @@
         <activity
             android:name=".controllers.AppScreen"
             android:label="@string/title_activity_app_screen"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".RegistrationScreen"
+            android:label="@string/title_activity_registration_screen"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

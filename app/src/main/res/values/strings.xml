@@ -15,4 +15,5 @@
         completions."
     </string>
     <string name="title_activity_app_screen">AppScreen</string>
+    <string name="title_activity_registration_screen">Registration Screen</string>
 </resources>
