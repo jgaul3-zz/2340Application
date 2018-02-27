@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.gatech.cs2340.cs2340application.R;
+import edu.gatech.cs2340.cs2340application.model.*;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -55,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         setupActionBar();
 
-        Model model =
+        final Model model = Model.getInstance();
 
         // Set up the login form.
         mUsernameView = (EditText) findViewById(R.id.username);
@@ -76,7 +77,19 @@ public class LoginActivity extends AppCompatActivity {
         mUsernameSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if Model.verify
+
+                String username = mUsernameView.getText().toString();
+                String password = mPasswordView.getText().toString();
+
+                if (model.verifyUser(username, password))
+                {
+                    Intent toApp = new Intent(LoginActivity.this, AppScreen.class);
+                    LoginActivity.this.startActivity(toApp);
+                }
+                else
+                {
+                    Toast.makeText(LoginActivity.this, "Incorrect Password", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

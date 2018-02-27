@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import edu.*;
-
 /**
  * Created by Jordan on 2/13/2018.
  *
@@ -141,14 +139,14 @@ public class Model {
      *
      * @param name the username
      * @param pass the password
-     * @return the user object or nullUser if incorrect.
+     * @return the result
      */
-    public User verifyUser(String name, String pass) {
+    public boolean verifyUser(String name, String pass) {
         for (User u : _users)
         {
-            if (u.getUsername().equals(name) && u.getPassword().equals(pass)) return u;
+            if (u.getUsername().equals(name) && u.getPassword().equals(pass)) return true;
         }
 
-        return nullUser;
+        return false;
     }
 }
