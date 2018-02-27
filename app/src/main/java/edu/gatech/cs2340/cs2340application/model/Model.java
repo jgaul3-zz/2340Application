@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.*;
+
 /**
  * Created by Jordan on 2/13/2018.
  *
@@ -35,7 +37,7 @@ public class Model {
     private final User nullUser = new User("No such user", "No such password");
 
     /** Null Shelter when shelter isn't found. */
-    private final Shelter nullShelter = new Shelter("Shelter doesn't exist",
+    private final Shelter nullShelter = new Shelter(0, "Shelter doesn't exist",
             0, 0, 0, "", "",
             "");
 
@@ -43,6 +45,22 @@ public class Model {
 
         _users = new ArrayList<>();
         _shelters = new ArrayList<>();
+
+        dummyData();
+        shelterRead();
+
+    }
+
+    private void dummyData() {
+        addUser(new User("Admin", "adminpass",
+                "Admin Adminson", Role.ADMIN));
+        addUser(new User("HomelessGuy", "homelesspass",
+                "Home Lesster", Role.HOMELESS));
+        addUser(new User("ShelterWorker", "workerpass",
+                "Shelter Worker", Role.EMPLOYEE));
+    }
+
+    private void shelterRead() {
 
     }
 

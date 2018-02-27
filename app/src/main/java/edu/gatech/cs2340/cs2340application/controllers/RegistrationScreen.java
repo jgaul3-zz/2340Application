@@ -1,9 +1,7 @@
-package edu.gatech.cs2340.cs2340application;
+package edu.gatech.cs2340.cs2340application.controllers;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -12,8 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import edu.gatech.cs2340.cs2340application.controllers.AppScreen;
-import edu.gatech.cs2340.cs2340application.controllers.LoginActivity;
+import edu.gatech.cs2340.cs2340application.R;
 
 public class RegistrationScreen extends AppCompatActivity {
 
@@ -27,15 +24,6 @@ public class RegistrationScreen extends AppCompatActivity {
         setSupportActionBar(toolbar);
         pass = findViewById(R.id.input_password);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-        //Prep buttons
         TextView logButton = findViewById(R.id.link_login);
 
         logButton.setOnClickListener(new View.OnClickListener() {

@@ -10,9 +10,6 @@ import java.util.List;
 
 public class Shelter {
 
-    /** allows each shelter to have a unique key number */
-    private static int Next_key = 0;
-
     /** this shelter's key number */
     private int _key;
 
@@ -93,9 +90,9 @@ public class Shelter {
     /**
      * Makes a new shelter
      */
-    public Shelter(String name, int capacity, double latitude, double longitude, String address,
+    public Shelter(int key, String name, int capacity, double latitude, double longitude, String address,
                    String phoneNumber, String notes) {
-        _key = Shelter.Next_key++;
+        _key = key;
         _name = name;
         _capacity = capacity;
         _occupancy = 0;

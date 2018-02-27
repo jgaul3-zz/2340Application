@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 
 import edu.gatech.cs2340.cs2340application.R;
-import edu.gatech.cs2340.cs2340application.RegistrationScreen;
 
 
 /** Top level window.

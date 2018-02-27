@@ -54,6 +54,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setupActionBar();
+
+        Model model =
+
         // Set up the login form.
         mUsernameView = (EditText) findViewById(R.id.username);
 
@@ -73,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
         mUsernameSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                if Model.verify
             }
         });
 
