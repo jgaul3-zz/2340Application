@@ -56,8 +56,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         setupActionBar();
 
-        final Model model = Model.getInstance();
-
         // Set up the login form.
         mUsernameView = (EditText) findViewById(R.id.username);
 
@@ -77,19 +75,7 @@ public class LoginActivity extends AppCompatActivity {
         mUsernameSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String username = mUsernameView.getText().toString();
-                String password = mPasswordView.getText().toString();
-
-                if (model.verifyUser(username, password))
-                {
-                    Intent toApp = new Intent(LoginActivity.this, AppScreen.class);
-                    LoginActivity.this.startActivity(toApp);
-                }
-                else
-                {
-                    Toast.makeText(LoginActivity.this, "Incorrect Password", Toast.LENGTH_SHORT).show();
-                }
+                attemptLogin();
             }
         });
 
@@ -114,23 +100,21 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void attemptLogin() {
 
+        final Model model = Model.getInstance();
+
         // Store values at the time of the login attempt.
         String username = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
 
-        if (username.equals("User") && password.equals("Pass"))
+        if (model.verifyUser(username, password))
         {
             Intent toApp = new Intent(LoginActivity.this, AppScreen.class);
             LoginActivity.this.startActivity(toApp);
         }
-        if (!username.equals("User")){
-            Toast.makeText(this, "Incorrect Username", Toast.LENGTH_SHORT).show();
+        else
+        {
+            Toast.makeText(LoginActivity.this, "Incorrect Info", Toast.LENGTH_SHORT).show();
         }
-        if (!password.equals("Pass")){
-            Toast.makeText(this, "Incorrect Password", Toast.LENGTH_SHORT).show();
-        }
-        boolean cancel = false;
-        View focusView = null;
     }
 
     private boolean isEmailValid(String email) {
