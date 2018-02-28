@@ -1,8 +1,19 @@
 package edu.gatech.cs2340.cs2340application.model;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+
+import edu.gatech.cs2340.cs2340application.R;
 
 /**
  * Created by Jordan on 2/13/2018.
@@ -45,7 +56,7 @@ public class Model {
         _shelters = new ArrayList<>();
 
         dummyData();
-        shelterRead();
+        //shelterRead();
 
     }
 
@@ -59,7 +70,18 @@ public class Model {
     }
 
     private void shelterRead() {
+        /*
+        try {
+            InputStream is = getResources().openRawResource(R.raw.homeless_shelter_database);
+            BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+            String line;
+            br.readLine();
 
+
+        } catch (IOException e) {
+
+        }
+        */
     }
 
     /** Getters */
