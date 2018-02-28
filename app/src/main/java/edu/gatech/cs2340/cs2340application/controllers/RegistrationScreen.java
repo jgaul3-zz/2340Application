@@ -12,9 +12,12 @@ import android.widget.TextView;
 
 import edu.gatech.cs2340.cs2340application.R;
 
+import edu.gatech.cs2340.cs2340application.model.*;
+
 public class RegistrationScreen extends AppCompatActivity {
 
     EditText pass;
+    Model model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,10 @@ public class RegistrationScreen extends AppCompatActivity {
                 }
                 else {
                     pass.setError(null);
+                    model.addUser(new User("Bill", password));
+
+
+
                     startActivity(new Intent(RegistrationScreen.this, AppScreen.class));
                 }
             }
