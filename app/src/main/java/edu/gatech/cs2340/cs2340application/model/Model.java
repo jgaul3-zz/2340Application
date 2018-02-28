@@ -43,7 +43,7 @@ public class Model {
     private Shelter _currentShelter;
 
     /** Null User when user isn't found. */
-    private final User nullUser = new User("No such user", "No such password");
+    public final User nullUser = new User("No such user", "No such password");
 
     /** Null Shelter when shelter isn't found. */
     private final Shelter nullShelter = new Shelter(0, "Shelter doesn't exist",
@@ -61,12 +61,9 @@ public class Model {
     }
 
     private void dummyData() {
-        addUser(new User("Admin", "adminpass",
-                "Admin Adminson", Role.ADMIN));
-        addUser(new User("HomelessGuy", "homelesspass",
-                "Home Lesster", Role.HOMELESS));
-        addUser(new User("ShelterWorker", "workerpass",
-                "Shelter Worker", Role.EMPLOYEE));
+        addUser(new User("Admin", "adminpass", Role.ADMIN));
+        addUser(new User("HomelessGuy", "homelesspass", Role.HOMELESS));
+        addUser(new User("ShelterWorker", "workerpass", Role.EMPLOYEE));
     }
 
     private void shelterRead() {
@@ -150,7 +147,7 @@ public class Model {
     public User getUserByUsername(String name) {
         for (User u : _users)
         {
-            if (u.getUsername().equals(name)) return u;
+            if (u.getUsername().toLowerCase().equals(name.toLowerCase())) return u;
         }
 
         return nullUser;
@@ -166,7 +163,8 @@ public class Model {
     public boolean verifyUser(String name, String pass) {
         for (User u : _users)
         {
-            if (u.getUsername().equals(name) && u.getPassword().equals(pass)) return true;
+            if (u.getUsername().toLowerCase().equals(name.toLowerCase())
+                    && u.getPassword().equals(pass)) return true;
         }
 
         return false;

@@ -40,17 +40,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"
-                android:inputType="textEmailAddress" />
+                android:inputType="textPassword" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- Password Label -->
 
         <!-- Signup Button -->
-        <RadioButton
-            android:id="@+id/adminButton"
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Admin" />
+            android:text="Account Type" />
+
+        <Spinner
+            android:id="@+id/typeSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_signup"
