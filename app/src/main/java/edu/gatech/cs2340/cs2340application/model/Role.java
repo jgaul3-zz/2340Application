@@ -9,19 +9,19 @@ public enum Role {
     EMPLOYEE ("EMPLOYEE"),
     ADMIN ("ADMIN");
 
-    /** the full string representation of the user's gender */
+    /** the full string representation of the user's role */
     private final String name;
 
     /**
      * Constructor for the enumeration
      *
-     * @param pname the gender selected
+     * @param pname the role selected
      */
     Role(String pname) { name = pname; }
 
     /**
      *
-     * @return the display string representation of the gender
+     * @return the display string representation of the role
      */
     public String toString() { return name; }
 }

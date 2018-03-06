@@ -1,8 +1,19 @@
 package edu.gatech.cs2340.cs2340application.model;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+
+import edu.gatech.cs2340.cs2340application.R;
 
 /**
  * Created by Jordan on 2/13/2018.
@@ -32,10 +43,10 @@ public class Model {
     private Shelter _currentShelter;
 
     /** Null User when user isn't found. */
-    private final User nullUser = new User("No such user", "No such password");
+    public final User nullUser = new User("No such user", "No such password");
 
     /** Null Shelter when shelter isn't found. */
-    private final Shelter nullShelter = new Shelter("Shelter doesn't exist",
+    private final Shelter nullShelter = new Shelter(0, "Shelter doesn't exist",
             0, 0, 0, "", "",
             "");
 
@@ -44,6 +55,30 @@ public class Model {
         _users = new ArrayList<>();
         _shelters = new ArrayList<>();
 
+        dummyData();
+        //shelterRead();
+
+    }
+
+    private void dummyData() {
+        addUser(new User("Admin", "adminpass", Role.ADMIN));
+        addUser(new User("HomelessGuy", "homelesspass", Role.HOMELESS));
+        addUser(new User("ShelterWorker", "workerpass", Role.EMPLOYEE));
+    }
+
+    private void shelterRead() {
+        /*
+        try {
+            InputStream is = getResources().openRawResource(R.raw.homeless_shelter_database);
+            BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+            String line;
+            br.readLine();
+
+
+        } catch (IOException e) {
+
+        }
+        */
     }
 
     /** Getters */
@@ -112,7 +147,7 @@ public class Model {
     public User getUserByUsername(String name) {
         for (User u : _users)
         {
-            if (u.getUsername().equals(name)) return u;
+            if (u.getUsername().toLowerCase().equals(name.toLowerCase())) return u;
         }
 
         return nullUser;
@@ -123,14 +158,15 @@ public class Model {
      *
      * @param name the username
      * @param pass the password
-     * @return the user object or nullUser if incorrect.
+     * @return the result
      */
-    public User verifyUser(String name, String pass) {
+    public boolean verifyUser(String name, String pass) {
         for (User u : _users)
         {
-            if (u.getUsername().equals(name) && u.getPassword().equals(pass)) return u;
+            if (u.getUsername().toLowerCase().equals(name.toLowerCase())
+                    && u.getPassword().equals(pass)) return true;
         }
 
-        return nullUser;
+        return false;
     }
 }
