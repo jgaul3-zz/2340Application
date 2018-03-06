@@ -36,7 +36,7 @@ public class OpeningScreen extends AppCompatActivity {
                 Intent toLogin = new Intent(OpeningScreen.this, RegistrationScreen.class);
                 OpeningScreen.this.startActivity(toLogin);
             }
-        }); 
+        });
 
         guestButton.setOnClickListener(new View.OnClickListener() {
 

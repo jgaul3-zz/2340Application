@@ -36,7 +36,7 @@ public class RegistrationScreen extends AppCompatActivity {
 //            }
 //        });
         //Prep buttons
-        TextView logButton = findViewById(R.id.link_login);
+        TextView logButton = findViewById(R.id.btn_link_login);
 
         logButton.setOnClickListener(new View.OnClickListener() {
 
