@@ -19,21 +19,17 @@ public class User {
     /** this user's id number */
     private int _id;
 
-
     /** this user's username */
     private String _username;
 
     /** this user's password */
     private String _password;
 
-
-
     /** this user's name */
     private String _name;
 
     /** this user's role */
     private Role _role;
-
 
     /** this user's gender */
     private Gender _gender;
@@ -118,7 +114,7 @@ public class User {
      * @param username  the user's username
      * @param password  the user's password
      * @param name      the user's name
-     * @param role      the user's gender
+     * @param role      the user's role
      */
     public User(String username, String password, String name, Role role) {
         this(username, password, name, role, Gender.OTHER, 100, false);
@@ -132,6 +128,16 @@ public class User {
      */
     public User(String username, String password, String name) {
         this(username, password, name, Role.HOMELESS);
+    }
+
+    /**
+     * Makes a new user
+     * @param username  the user's username
+     * @param password  the user's password
+     * @param role      the user's role
+     */
+    public User(String username, String password, Role role) {
+        this(username, password, "", role, Gender.OTHER, 100, false);
     }
 
     /**

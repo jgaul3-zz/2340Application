@@ -16,4 +16,6 @@
     </string>
     <string name="title_activity_app_screen">AppScreen</string>
     <string name="title_activity_registration_screen">Registration Screen</string>
+    <string name="title_shelter_list">Shelters</string>
+    <string name="title_shelter_detail">Shelter Detail</string>
 </resources>

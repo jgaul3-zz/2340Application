@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.gatech.cs2340.cs2340application.R;
+import edu.gatech.cs2340.cs2340application.model.*;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -54,10 +55,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setupActionBar();
-        // Set up the login form.
-        mUsernameView = (EditText) findViewById(R.id.username);
 
-        mPasswordView = (EditText) findViewById(R.id.password);
+        // Set up the login form.
+        mUsernameView = findViewById(R.id.username);
+        mPasswordView = findViewById(R.id.password);
+
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -69,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        Button mUsernameSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        Button mUsernameSignInButton = findViewById(R.id.email_sign_in_button);
         mUsernameSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,23 +100,21 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void attemptLogin() {
 
+        final Model model = Model.getInstance();
+
         // Store values at the time of the login attempt.
         String username = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
 
-        if (username.equals("User") && password.equals("Pass"))
+        if (model.verifyUser(username, password))
         {
             Intent toApp = new Intent(LoginActivity.this, AppScreen.class);
             LoginActivity.this.startActivity(toApp);
         }
-        if (!username.equals("User")){
-            Toast.makeText(this, "Incorrect Username", Toast.LENGTH_SHORT).show();
+        else
+        {
+            Toast.makeText(LoginActivity.this, "Incorrect Info", Toast.LENGTH_SHORT).show();
         }
-        if (!password.equals("Pass")){
-            Toast.makeText(this, "Incorrect Password", Toast.LENGTH_SHORT).show();
-        }
-        boolean cancel = false;
-        View focusView = null;
     }
 
     private boolean isEmailValid(String email) {
