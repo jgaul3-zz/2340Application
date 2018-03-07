@@ -56,7 +56,6 @@ public class Model {
         _shelters = new ArrayList<>();
 
         dummyData();
-        //shelterRead();
 
     }
 
@@ -64,21 +63,6 @@ public class Model {
         addUser(new User("Admin", "adminpass", Role.ADMIN));
         addUser(new User("HomelessGuy", "homelesspass", Role.HOMELESS));
         addUser(new User("ShelterWorker", "workerpass", Role.EMPLOYEE));
-    }
-
-    private void shelterRead() {
-        /*
-        try {
-            InputStream is = getResources().openRawResource(R.raw.homeless_shelter_database);
-            BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-            String line;
-            br.readLine();
-
-
-        } catch (IOException e) {
-
-        }
-        */
     }
 
     /** Getters */

@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 
 import edu.gatech.cs2340.cs2340application.dummy.DummyContent;
+import edu.gatech.cs2340.cs2340application.model.Shelter;
 
 import java.util.List;
 
@@ -73,8 +74,7 @@ public class ShelterListActivity extends AppCompatActivity {
     public static class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 
-        private final ItemListActivity mParentActivity;
-        private final List<DummyContent.DummyItem> mValues;
+        private final List<Shelter> mValues;
         private final boolean mTwoPane;
         private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
             @Override
