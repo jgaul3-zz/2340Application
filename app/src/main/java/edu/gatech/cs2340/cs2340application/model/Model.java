@@ -42,6 +42,16 @@ public class Model {
     /**Currently selected shelter for admin tasks. */
     private Shelter _currentShelter;
 
+    private int currentShelterId;
+
+    public int getCurrentShelterId() {
+        return currentShelterId;
+    }
+    public void setCurrentShelterId(int ID) {
+        currentShelterId = ID;
+    }
+
+
     /** Null User when user isn't found. */
     public final User nullUser = new User("No such user", "No such password");
 
@@ -130,12 +140,12 @@ public class Model {
 //     * @param key the id
 //     * @return the shelter or nullShelter
 //     */
-//    public Shelter findShelterById(int key) {
-//        for (Shelter d : _shelters) {
-//            if (d.getKey() == key) return d;
-//        }
-//        return nullShelter;
-//    }
+    public Shelter findShelterById(int key) {
+        for (Shelter d : _shelters) {
+            if (d.getKey() == key) return d;
+        }
+        return nullShelter;
+    }
 
     /**
      * given a username, returns the user if they exist.
