@@ -31,10 +31,10 @@ public class Model {
     public static Model getInstance() { return _instance; }
 
     /** List of users. */
-    private List<User> _users;
+    private ArrayList<User> _users;
 
     /** List of shelters. */
-    private List<Shelter> _shelters;
+    private ArrayList<Shelter> _shelters;
 
     /**Currently selected user for admin tasks. */
     private User _currentUser;
@@ -47,7 +47,7 @@ public class Model {
 
     /** Null Shelter when shelter isn't found. */
     private final Shelter nullShelter = new Shelter(0, "Shelter doesn't exist",
-            0, 0, 0, "", "",
+            "0", 0, 0, "", "",
             "");
 
     private Model() {
@@ -66,9 +66,9 @@ public class Model {
     }
 
     /** Getters */
-    public List<User> getUsers() { return _users; }
+    public ArrayList<User> getUsers() { return _users; }
 
-    public List<Shelter> getShelters() { return _shelters; }
+    public ArrayList<Shelter> getShelters() { return _shelters; }
 
     /**
      * adds a user to the app if they don't already exist.
@@ -121,6 +121,21 @@ public class Model {
     public boolean removeShelter(Shelter shelter) {
         return _shelters.remove(shelter);
     }
+
+//    Charleston Commit
+
+//    /**
+//     * given a username, returns the user if they exist.
+//     *
+//     * @param key the id
+//     * @return the shelter or nullShelter
+//     */
+//    public Shelter findShelterById(int key) {
+//        for (Shelter d : _shelters) {
+//            if (d.getKey() == key) return d;
+//        }
+//        return nullShelter;
+//    }
 
     /**
      * given a username, returns the user if they exist.
