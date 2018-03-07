@@ -8,12 +8,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
 
 import edu.gatech.cs2340.cs2340application.R;
+import edu.gatech.cs2340.cs2340application.ShelterDetailActivity;
 import edu.gatech.cs2340.cs2340application.model.*;
 
 public class AppScreen extends AppCompatActivity {
@@ -35,6 +37,18 @@ public class AppScreen extends AppCompatActivity {
                 android.R.layout.simple_list_item_1,
                 model.getShelters()
         ));
+        shelterList.setOnItemClickListener(new ListView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> adapter, View v, int position, long jum){
+                Shelter item = (Shelter)adapter.getItemAtPosition(position);
+                Log.e("test", "User Button Pressed.");
+
+                Intent intent = new Intent(AppScreen.this, ShelterDetailActivity.class);
+//based on item add info to intent
+                model.setCurrentShelterId(item.getKey());
+                startActivity(intent);
+            }
+        });
 
         logOut.setOnClickListener(new View.OnClickListener() {
 
