@@ -69,7 +69,7 @@ public class ShelterDetailActivity extends AppCompatActivity {
                 phoneNumber.setText("Phone Number: " + currentShelter.getPhoneNumber());
 
             }
-        
+
 
     }
 //
