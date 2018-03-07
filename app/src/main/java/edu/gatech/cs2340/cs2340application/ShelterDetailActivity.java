@@ -12,6 +12,7 @@ import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import edu.gatech.cs2340.cs2340application.model.Model;
 import edu.gatech.cs2340.cs2340application.model.Shelter;
 
 /**
@@ -21,6 +22,7 @@ import edu.gatech.cs2340.cs2340application.model.Shelter;
  * in a {@link ShelterListActivity}.
  */
 public class ShelterDetailActivity extends AppCompatActivity {
+    Model model = Model.getInstance();
 
     TextView name;
     TextView shelterAddress;
@@ -55,8 +57,8 @@ public class ShelterDetailActivity extends AppCompatActivity {
         longitude = findViewById(R.id.longitudeDetailLabel);
         phoneNumber = findViewById(R.id.phoneNumberDetailLabel);
 
-        if (getIntent().getExtras() != null) {
-            Shelter currentShelter = (Shelter) getIntent().getSerializableExtra("Shelter");
+
+            Shelter currentShelter = model.findShelterById(model.getCurrentShelterId());
             if (currentShelter != null) {
                 name.setText("Name: " + currentShelter.getName());
                 capacity.setText("Capacity: " + currentShelter.getCapacity());
@@ -67,7 +69,7 @@ public class ShelterDetailActivity extends AppCompatActivity {
                 phoneNumber.setText("Phone Number: " + currentShelter.getPhoneNumber());
 
             }
-        }
+        
 
     }
 //
