@@ -17,7 +17,7 @@ public class Shelter {
     private String _name;
 
     /** this shelter's max capacity */
-    private int _capacity;
+    private String _capacity;
 
     /** this shelter's current occupancy */
     private int _occupancy;
@@ -56,8 +56,8 @@ public class Shelter {
     public String getName() { return _name; }
     public void setName(String name) { _name = name; }
 
-    public int getCapacity() { return _capacity; }
-    public void setCapacity(int capacity) { _capacity = capacity; }
+    public String getCapacity() { return _capacity; }
+    public void setCapacity(String capacity) { _capacity = capacity; }
 
     public int getOccupancy() { return _occupancy; }
     public void setOccupancy(int occupancy) { _occupancy = occupancy; }
@@ -90,7 +90,7 @@ public class Shelter {
     /**
      * Makes a new shelter
      */
-    public Shelter(int key, String name, int capacity, double latitude, double longitude, String address,
+    public Shelter(int key, String name, String capacity, double latitude, double longitude, String address,
                    String phoneNumber, String notes) {
         _key = key;
         _name = name;
