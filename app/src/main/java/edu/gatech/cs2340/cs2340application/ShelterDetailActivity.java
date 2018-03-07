@@ -10,6 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import edu.gatech.cs2340.cs2340application.model.Shelter;
 
 /**
  * An activity representing a single Shelter detail screen. This
@@ -18,22 +21,55 @@ import android.view.MenuItem;
  * in a {@link ShelterListActivity}.
  */
 public class ShelterDetailActivity extends AppCompatActivity {
+
+    TextView name;
+    TextView shelterAddress;
+    TextView capacity;
+    TextView gender;
+    TextView latitude;
+    TextView longitude;
+    TextView phoneNumber;
 //
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_shelter_detail);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
-//        setSupportActionBar(toolbar);
-//
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_shelter_detail);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
+        setSupportActionBar(toolbar);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+        name = findViewById(R.id.nameDetailLabel);
+        shelterAddress = findViewById(R.id.addressDetailLabel);
+        capacity = findViewById(R.id.capacityDetailLabel);
+        gender = findViewById(R.id.genderDetailLabel);
+        latitude = findViewById(R.id.latitudeDetailLabel);
+        longitude = findViewById(R.id.longitudeDetailLabel);
+        phoneNumber = findViewById(R.id.phoneNumberDetailLabel);
+
+        if (getIntent().getExtras() != null) {
+            Shelter currentShelter = (Shelter) getIntent().getSerializableExtra("Shelter");
+            if (currentShelter != null) {
+                name.setText("Name: " + currentShelter.getName());
+                capacity.setText("Capacity: " + currentShelter.getCapacity());
+                gender.setText("Restrictions: " + currentShelter.getRestrictions());
+                longitude.setText("Longitude: " + currentShelter.getLongitude());
+                latitude.setText("Latitude: " + currentShelter.getLatitude());
+                shelterAddress.setText("Address: " + currentShelter.getAddress());
+                phoneNumber.setText("Phone Number: " + currentShelter.getPhoneNumber());
+
+            }
+        }
+
+    }
 //
 //        // Show the Up button in the action bar.
 //        ActionBar actionBar = getSupportActionBar();
