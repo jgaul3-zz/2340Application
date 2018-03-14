@@ -18,5 +18,6 @@
     <string name="title_activity_registration_screen">Registration Screen</string>
     <string name="title_shelter_list">Shelters</string>
     <string name="title_shelter_detail">Shelter Detail</string>
-    <string name="title_activity_search_shelters"> SearchSheltersActivity</string>
+    <string name="title_activity_search_shelters">Search</string>
+    <string name="title_results">Search Results</string>
 </resources>

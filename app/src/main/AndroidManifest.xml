@@ -53,6 +53,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.gatech.cs2340.cs2340application.ShelterListActivity" />
         </activity>
+        <activity
+            android:name=".controllers.Results"
+            android:label="@string/title_results"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
