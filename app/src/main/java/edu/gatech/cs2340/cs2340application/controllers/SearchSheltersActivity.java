@@ -12,14 +12,17 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import edu.gatech.cs2340.cs2340application.R;
-import edu.gatech.cs2340.cs2340application.model.Model;
+import edu.gatech.cs2340.cs2340application.model.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,56 +39,42 @@ import java.util.List;
 public class SearchSheltersActivity extends AppCompatActivity {
 
     // UI references.
-    private EditText mUsernameView;
-    private EditText mPasswordView;
-    private View mProgressView;
-    private View mLoginFormView;
+    private EditText mShelterNameView;
+    private Spinner mAgeRangeView;
+    private Spinner mGenderView;
+
+    Model model = Model.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        setupActionBar();
+        setContentView(R.layout.activity_search_shelters);
 
-        // Set up the login form.
-        mUsernameView = findViewById(R.id.username);
-        mPasswordView = findViewById(R.id.password);
+        // Set up the search form.
+        mShelterNameView = findViewById(R.id.shelterName);
+        mAgeRangeView = findViewById(R.id.age_spinner);
+        mGenderView = findViewById(R.id.gender_spinner);
 
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
-                    openResults();
-                    return true;
-                }
-                return false;
-            }
-        });
+        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Gender.values());
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mGenderView.setAdapter(adapter);
 
-        Button mUsernameSignInButton = findViewById(R.id.email_sign_in_button);
-        mUsernameSignInButton.setOnClickListener(new View.OnClickListener() {
+        Button mResultsButton = findViewById(R.id.results_button);
+        mResultsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openResults();
+                Intent toApp = new Intent(SearchSheltersActivity.this, Results.class);
+                SearchSheltersActivity.this.startActivity(toApp);
+
             }
         });
 
-        mLoginFormView = findViewById(R.id.login_form);
+        //mLoginFormView = findViewById(R.id.login_form);
     }
 
     /**
-     * Set up the {@link android.app.ActionBar}, if the API is available.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    private void setupActionBar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            // Show the Up button in the action bar.
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-    }
-
-    /**
-     * Attempts to sign in or register the account specified by the login form.
+     * Attempts to apply the search criteria.
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
@@ -94,18 +83,32 @@ public class SearchSheltersActivity extends AppCompatActivity {
         final Model model = Model.getInstance();
 
         // Store values at the time of the login attempt.
-        String username = mUsernameView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        String shelterName = mShelterNameView.getText().toString();
+        String shelterAgeRange = (String) mAgeRangeView.getSelectedItem();
+        Gender shelterGender = (Gender) mGenderView.getSelectedItem();
 
-        if (model.verifyUser(username, password))
-        {
-            Intent toApp = new Intent(SearchSheltersActivity.this, AppScreen.class); //Results.class);
-            SearchSheltersActivity.this.startActivity(toApp);
+        Log.e(shelterName, "did it");
+
+        model.clearSearchShelters();
+        for (Shelter shelter: model.getShelters()) {
+            if ((shelterName == null) || (shelter.getName().contains(shelterName))) {
+                if ((shelterAgeRange == null) || true) {
+                    if ((shelterGender == Gender.ANY) || shelter.getRestrictions().contains(shelterGender.toString())) {
+                        model.addSearchShelter(shelter);
+                    }
+                }
+            }
         }
-        else
-        {
-            Toast.makeText(SearchSheltersActivity.this, "Incorrect Info", Toast.LENGTH_SHORT).show();
-        }
+
+//        if (model.verifyUser(username, password))
+//        {
+//            Intent toApp = new Intent(SearchSheltersActivity.this, AppScreen.class); //Results.class);
+//            SearchSheltersActivity.this.startActivity(toApp);
+//        }
+//        else
+//        {
+//            Toast.makeText(SearchSheltersActivity.this, "Incorrect Info", Toast.LENGTH_SHORT).show();
+//        }
     }
 
     private boolean isEmailValid(String email) {
