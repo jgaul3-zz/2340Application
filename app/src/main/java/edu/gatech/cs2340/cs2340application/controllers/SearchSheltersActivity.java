@@ -93,7 +93,9 @@ public class SearchSheltersActivity extends AppCompatActivity {
         for (Shelter shelter: model.getShelters()) {
             if ((shelterName == null) || (shelter.getName().contains(shelterName))) {
                 if ((shelterAgeRange == null) || true) {
-                    if ((shelterGender == Gender.ANY) || shelter.getRestrictions().contains(shelterGender.toString())) {
+                    if ((shelterGender == Gender.ANYONE)
+                            || shelter.getRestrictions().contains(Gender.ANYONE.toString())
+                            || shelter.getRestrictions().contains(shelterGender.toString())) {
                         model.addSearchShelter(shelter);
                     }
                 }

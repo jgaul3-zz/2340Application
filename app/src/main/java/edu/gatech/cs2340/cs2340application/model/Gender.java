@@ -7,10 +7,10 @@ package edu.gatech.cs2340.cs2340application.model;
  */
 
 public enum Gender {
-    ANY ("ANY"),
-    MALE ("MALE"),
-    FEMALE ("FEMALE"),
-    OTHER ("OTHER");
+    ANYONE ("Anyone "),
+    MEN ("Men"),
+    WOMEN ("Women"),
+    OTHER ("Other");
 
     /** the full string representation of the user's gender */
     private final String name;
