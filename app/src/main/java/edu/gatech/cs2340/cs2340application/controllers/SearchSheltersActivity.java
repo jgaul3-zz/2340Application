@@ -97,8 +97,6 @@ public class SearchSheltersActivity extends AppCompatActivity {
 
             //Log.e(shelter.getName(), "top of loop");
             if ((shelterName == null) || (shelter.getName().toLowerCase().contains(shelterName.toLowerCase()))) {
-                //Log.e(shelter.getName(), "bottom of loop");
-                //mAgeRangeView.setSelection(shelter.getAgeRange().ordinal());
                 if ((shelterAgeRange == AgeRange.ANYONE) || shelter.getRestrictions().contains(shelterAgeRange.toString())) {
                     if ((shelterGender == Gender.ANYONE) || shelter.getRestrictions().contains(shelterGender.toString()) || !(shelter.getRestrictions().contains(shelterGender.opposite().toString()))) {
                         model.addSearchShelter(shelter);
