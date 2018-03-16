@@ -96,10 +96,13 @@ public class SearchSheltersActivity extends AppCompatActivity {
         for (Shelter shelter: model.getShelters()) {
 
             //Log.e(shelter.getName(), "top of loop");
-            if ((shelterName == null) || (shelter.getName().toLowerCase().contains(shelterName.toLowerCase()))) {
-                if ((shelterAgeRange == AgeRange.ANYONE) || shelter.getRestrictions().contains(shelterAgeRange.toString())) {
-                    if ((shelterGender == Gender.ANYONE) || shelter.getRestrictions().contains(shelterGender.toString()) || !(shelter.getRestrictions().contains(shelterGender.opposite().toString()))) {
-                        model.addSearchShelter(shelter);
+            if ((shelterName.equals("")) || (shelter.getName().toLowerCase().contains(shelterName.toLowerCase()))) {
+
+                for (String restriction: shelter.getRestrictions()) {
+                    if (shelterAgeRange.equals(AgeRange.NA) || restriction.toLowerCase().contains(shelterAgeRange.toString().toLowerCase())) {
+                        if (shelterGender.equals(Gender.NA) || shelter.getRestrictions().contains(shelterGender.toString()) || !(shelter.getRestrictions().contains(shelterGender.opposite().toString()))) {
+                            model.addSearchShelter(shelter);
+                        }
                     }
                 }
             }
