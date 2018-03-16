@@ -22,6 +22,16 @@ public enum Gender {
      */
     Gender(String pname) { name = pname; }
 
+    public Gender opposite() {
+        if (this.equals(Gender.MEN)) {
+            return Gender.WOMEN;
+        } else if (this.equals(Gender.WOMEN)) {
+            return Gender.MEN;
+        } else {
+            return Gender.ANYONE;
+        }
+    }
+
     /**
      *
      * @return the display string representation of the gender
