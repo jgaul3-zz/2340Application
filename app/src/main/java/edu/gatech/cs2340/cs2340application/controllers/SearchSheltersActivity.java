@@ -2,7 +2,6 @@ package edu.gatech.cs2340.cs2340application.controllers;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -59,6 +58,10 @@ public class SearchSheltersActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mGenderView.setAdapter(adapter);
 
+        ArrayAdapter<String> ageAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, AgeRange.values());
+        ageAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mAgeRangeView.setAdapter(ageAdapter);
+
         Button mResultsButton = findViewById(R.id.results_button);
         mResultsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,16 +87,20 @@ public class SearchSheltersActivity extends AppCompatActivity {
 
         // Store values at the time of the login attempt.
         String shelterName = mShelterNameView.getText().toString();
-        String shelterAgeRange = (String) mAgeRangeView.getSelectedItem();
+        AgeRange shelterAgeRange = (AgeRange) mAgeRangeView.getSelectedItem();
         Gender shelterGender = (Gender) mGenderView.getSelectedItem();
 
         Log.e(shelterName, "did it");
 
         model.clearSearchShelters();
         for (Shelter shelter: model.getShelters()) {
-            if ((shelterName == null) || (shelter.getName().contains(shelterName))) {
-                if ((shelterAgeRange == null) || true) {
-                    if ((shelterGender == Gender.ANY) || shelter.getRestrictions().contains(shelterGender.toString())) {
+
+            //Log.e(shelter.getName(), "top of loop");
+            if ((shelterName == null) || (shelter.getName().toLowerCase().contains(shelterName.toLowerCase()))) {
+                //Log.e(shelter.getName(), "bottom of loop");
+                //mAgeRangeView.setSelection(shelter.getAgeRange().ordinal());
+                if ((shelterAgeRange == AgeRange.ANYONE) || shelter.getRestrictions().contains(shelterAgeRange.toString())) {
+                    if ((shelterGender == Gender.ANYONE) || shelter.getRestrictions().contains(shelterGender.toString()) || !(shelter.getRestrictions().contains(shelterGender.opposite().toString()))) {
                         model.addSearchShelter(shelter);
                     }
                 }
