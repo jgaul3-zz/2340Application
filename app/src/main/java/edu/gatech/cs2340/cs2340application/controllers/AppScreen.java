@@ -41,7 +41,6 @@ public class AppScreen extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapter, View v, int position, long jum){
                 Shelter item = (Shelter)adapter.getItemAtPosition(position);
-                Log.e("test", "User Button Pressed.");
 
                 Intent intent = new Intent(AppScreen.this, ShelterDetailActivity.class);
 //based on item add info to intent
@@ -54,8 +53,6 @@ public class AppScreen extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Log.i("test", "User Button Pressed.");
-
                 Intent toOpen = new Intent(AppScreen.this, OpeningScreen.class);
                 AppScreen.this.startActivity(toOpen);
             }
@@ -65,8 +62,6 @@ public class AppScreen extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Log.i("test", "User Button Pressed.");
-
                 Intent toOpen = new Intent(AppScreen.this, SearchSheltersActivity.class);
                 AppScreen.this.startActivity(toOpen);
             }
