@@ -1,23 +1,9 @@
-package edu.gatech.cs2340.cs2340application;
+package edu.gatech.cs2340.cs2340application.controllers;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 
-import edu.gatech.cs2340.cs2340application.model.Shelter;
-
-import java.util.List;
+import edu.gatech.cs2340.cs2340application.controllers.ShelterDetailActivity;
 
 /**
  * An activity representing a list of Shelters. This activity

@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import edu.gatech.cs2340.cs2340application.R;
-import edu.gatech.cs2340.cs2340application.ShelterDetailActivity;
 import edu.gatech.cs2340.cs2340application.model.Model;
 import edu.gatech.cs2340.cs2340application.model.Shelter;
 
