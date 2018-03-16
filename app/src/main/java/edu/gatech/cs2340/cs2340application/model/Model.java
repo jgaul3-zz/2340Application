@@ -161,14 +161,12 @@ public class Model {
         return _shelters.remove(shelter);
     }
 
-//    Charleston Commit
-
-//    /**
-//     * given a username, returns the user if they exist.
-//     *
-//     * @param key the id
-//     * @return the shelter or nullShelter
-//     */
+    /**
+     * given a username, returns the user if they exist.
+     *
+     * @param key the id
+     * @return the shelter or nullShelter
+     */
     public Shelter findShelterById(int key) {
         for (Shelter d : _shelters) {
             if (d.getKey() == key) return d;

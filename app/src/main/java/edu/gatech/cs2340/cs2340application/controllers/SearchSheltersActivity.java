@@ -67,7 +67,6 @@ public class SearchSheltersActivity extends AppCompatActivity {
         mResultsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("one sec", "did it");
                 openResults();
                 Intent toApp = new Intent(SearchSheltersActivity.this, Results.class);
                 SearchSheltersActivity.this.startActivity(toApp);
@@ -76,7 +75,6 @@ public class SearchSheltersActivity extends AppCompatActivity {
         });
 
         //mLoginFormView = findViewById(R.id.login_form);
-
     }
 
     /**
@@ -87,7 +85,6 @@ public class SearchSheltersActivity extends AppCompatActivity {
     private void openResults() {
 
         final Model model = Model.getInstance();
-
 
         // Store values at the time of the login attempt.
         String shelterName = mShelterNameView.getText().toString();
@@ -109,7 +106,6 @@ public class SearchSheltersActivity extends AppCompatActivity {
                     }
                 }
             }
-
         }
 
 //        if (model.verifyUser(username, password))

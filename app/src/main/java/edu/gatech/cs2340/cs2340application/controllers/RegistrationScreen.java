@@ -72,7 +72,7 @@ public class RegistrationScreen extends AppCompatActivity {
 
         if (!nameCheck)
         {
-            Toast.makeText(RegistrationScreen.this, "Username is taken", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegistrationScreen.this, "Username is takn", Toast.LENGTH_SHORT).show();
         }
         else if (!passCheck)
         {

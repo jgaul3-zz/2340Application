@@ -23,7 +23,7 @@ public class Results extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.e("HEY", "did it 365");
+        Log.e("HEY", "did it 35");
         setContentView(R.layout.activity_app_screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
