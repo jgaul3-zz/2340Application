@@ -59,10 +59,15 @@ public class SearchSheltersActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mGenderView.setAdapter(adapter);
 
+        ArrayAdapter<String> ageAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, AgeRange.values());
+        ageAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mAgeRangeView.setAdapter(ageAdapter);
+
         Button mResultsButton = findViewById(R.id.results_button);
         mResultsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.e("one sec", "did it");
                 openResults();
                 Intent toApp = new Intent(SearchSheltersActivity.this, Results.class);
                 SearchSheltersActivity.this.startActivity(toApp);
@@ -71,6 +76,7 @@ public class SearchSheltersActivity extends AppCompatActivity {
         });
 
         //mLoginFormView = findViewById(R.id.login_form);
+
     }
 
     /**
@@ -82,22 +88,28 @@ public class SearchSheltersActivity extends AppCompatActivity {
 
         final Model model = Model.getInstance();
 
+
         // Store values at the time of the login attempt.
         String shelterName = mShelterNameView.getText().toString();
-        String shelterAgeRange = (String) mAgeRangeView.getSelectedItem();
+        AgeRange shelterAgeRange = (AgeRange) mAgeRangeView.getSelectedItem();
         Gender shelterGender = (Gender) mGenderView.getSelectedItem();
 
         Log.e(shelterName, "did it");
 
         model.clearSearchShelters();
         for (Shelter shelter: model.getShelters()) {
-            if ((shelterName == null) || (shelter.getName().contains(shelterName))) {
-                if ((shelterAgeRange == null) || true) {
+
+            //Log.e(shelter.getName(), "top of loop");
+            if ((shelterName == null) || (shelter.getName().toLowerCase().contains(shelterName.toLowerCase()))) {
+                //Log.e(shelter.getName(), "bottom of loop");
+                //mAgeRangeView.setSelection(shelter.getAgeRange().ordinal());
+                if ((shelterAgeRange == AgeRange.ANYONE) || shelter.getRestrictions().contains(shelterAgeRange.toString())) {
                     if ((shelterGender == Gender.ANY) || shelter.getRestrictions().contains(shelterGender.toString())) {
                         model.addSearchShelter(shelter);
                     }
                 }
             }
+
         }
 
 //        if (model.verifyUser(username, password))
