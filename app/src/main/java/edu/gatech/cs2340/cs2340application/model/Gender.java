@@ -7,6 +7,7 @@ package edu.gatech.cs2340.cs2340application.model;
  */
 
 public enum Gender {
+    NA ("N/A"),
     ANYONE ("Anyone "),
     MEN ("Men"),
     WOMEN ("Women"),
