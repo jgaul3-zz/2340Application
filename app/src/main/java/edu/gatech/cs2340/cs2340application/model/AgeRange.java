@@ -6,7 +6,7 @@ package edu.gatech.cs2340.cs2340application.model;
 
 public enum AgeRange {
     ANYONE ("Anyone"),
-    FAMILIES ("Family/Newborns"),
+    FAMILIES ("Families"),
     CHILDREN ("Children"),
     YOUNG_ADULTS ("Young adults");
 
