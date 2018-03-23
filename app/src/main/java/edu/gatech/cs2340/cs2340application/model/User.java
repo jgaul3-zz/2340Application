@@ -48,7 +48,6 @@ public class User {
      * Getters and setters
      */
 
-
     public int getId() { return _id; }
 
     public String getUsername() { return _username; }

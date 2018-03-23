@@ -35,6 +35,7 @@ public class Model {
 
     /** List of shelters. */
     private ArrayList<Shelter> _shelters;
+    private ArrayList<Shelter> _searchShelters;
 
     /**Currently selected user for admin tasks. */
     private User _currentUser;
@@ -78,6 +79,9 @@ public class Model {
     public User getCurrentUser() { return _currentUser; }
     public void setCurrentUser(User u) { _currentUser = u; }
 
+    public ArrayList<Shelter> getSearchShelters() { return _searchShelters; }
+
+
     /**
      * adds a user to the app if they don't already exist.
      *
@@ -118,6 +122,31 @@ public class Model {
 
         _shelters.add(shelter);
         return true;
+    }
+
+    /**
+     * adds a shelter to the search list if they don't already exist.
+     *
+     * @param shelter the shelter to be added
+     * @return whether the shelter was added
+     */
+    public boolean addSearchShelter(Shelter shelter) {
+        for (Shelter s : _searchShelters )
+        {
+            if (s.equals(shelter)) return false;
+        }
+
+        _searchShelters.add(shelter);
+        return true;
+    }
+
+    /**
+     * adds a shelter to the app if they don't already exist.
+     *
+     * @return whether the shelter was added
+     */
+    public void clearSearchShelters() {
+        _searchShelters = new ArrayList<>();
     }
 
     /**

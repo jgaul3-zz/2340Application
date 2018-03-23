@@ -4,23 +4,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-
 import edu.gatech.cs2340.cs2340application.R;
-import edu.gatech.cs2340.cs2340application.model.*;
+import edu.gatech.cs2340.cs2340application.model.Model;
+import edu.gatech.cs2340.cs2340application.model.Shelter;
 
-public class AppScreen extends AppCompatActivity {
+public class Results extends AppCompatActivity {
 
     Model model = Model.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e("HEY", "did it 35");
         setContentView(R.layout.activity_app_screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -31,14 +33,15 @@ public class AppScreen extends AppCompatActivity {
         shelterList.setAdapter(new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_1,
-                model.getShelters()
+                model.getSearchShelters()
         ));
         shelterList.setOnItemClickListener(new ListView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> adapter, View v, int position, long jum){
                 Shelter item = (Shelter)adapter.getItemAtPosition(position);
+                Log.e("test", "User Button Pressed.");
 
-                Intent intent = new Intent(AppScreen.this, ShelterDetailActivity.class);
+                Intent intent = new Intent(Results.this, ShelterDetailActivity.class);
 //based on item add info to intent
                 model.setCurrentShelterId(item.getKey());
                 startActivity(intent);
@@ -49,8 +52,10 @@ public class AppScreen extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent toOpen = new Intent(AppScreen.this, OpeningScreen.class);
-                AppScreen.this.startActivity(toOpen);
+                Log.i("test", "User Button Pressed.");
+
+                Intent toOpen = new Intent(Results.this, OpeningScreen.class);
+                Results.this.startActivity(toOpen);
             }
         });
 
@@ -58,8 +63,10 @@ public class AppScreen extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent toOpen = new Intent(AppScreen.this, SearchSheltersActivity.class);
-                AppScreen.this.startActivity(toOpen);
+                Log.i("test", "User Button Pressed.");
+
+                Intent toOpen = new Intent(Results.this, SearchSheltersActivity.class);
+                Results.this.startActivity(toOpen);
             }
         });
 

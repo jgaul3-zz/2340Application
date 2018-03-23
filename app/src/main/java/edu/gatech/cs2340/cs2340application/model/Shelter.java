@@ -47,10 +47,15 @@ public class Shelter {
     /** employees here */
     private List<User> _employees;
 
-
+    /** this shelters's age range */
+    private AgeRange userAgeRange;
     /* **********************
      * Getters and setters
      */
+
+    public AgeRange getAgeRange() { return userAgeRange; }
+    public void setAgeRange(AgeRange uAgeRange) {  userAgeRange = uAgeRange; }
+
     public int getKey() { return _key; }
 
     public String getName() { return _name; }

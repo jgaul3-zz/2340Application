@@ -125,6 +125,8 @@ public class OpeningScreen extends AppCompatActivity {
                 Log.e("notes", line.get(7));
 
                 Shelter rick = new Shelter(key, name, capacity, latitude, longitude, address, phoneNumber, notes);
+
+                rick.setRestrictions(parseLine(line.get(3), '/', 'w'));
                 model.addShelter(rick);
             }
             scanner.close();

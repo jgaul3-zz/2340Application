@@ -38,21 +38,25 @@
             android:label="@string/title_activity_registration_screen"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".ShelterListActivity"
+            android:name=".controllers.ShelterListActivity"
             android:label="@string/title_shelter_list"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".controllers.SearchSheltersActivity"
             android:label="@string/title_activity_search_shelters"></activity>
         <activity
-            android:name=".ShelterDetailActivity"
+            android:name=".controllers.ShelterDetailActivity"
             android:label="@string/title_shelter_detail"
-            android:parentActivityName=".ShelterListActivity"
+            android:parentActivityName=".controllers.ShelterListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="edu.gatech.cs2340.cs2340application.ShelterListActivity" />
+                android:value="edu.gatech.cs2340.cs2340application.controllers.ShelterListActivity" />
         </activity>
+        <activity
+            android:name=".controllers.Results"
+            android:label="@string/title_results"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
