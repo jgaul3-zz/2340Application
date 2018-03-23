@@ -15,7 +15,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
+import edu.gatech.cs2340.cs2340application.model.Model;
 import edu.gatech.cs2340.cs2340application.model.Shelter;
+import edu.gatech.cs2340.cs2340application.R;
 
 import java.util.List;
 
@@ -29,11 +31,6 @@ import java.util.List;
  */
 public class ShelterListActivity extends AppCompatActivity {
 //
-//    /**
-//     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-//     * device.
-//     */
-//    private boolean mTwoPane;
 //
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
@@ -44,22 +41,6 @@ public class ShelterListActivity extends AppCompatActivity {
 //        setSupportActionBar(toolbar);
 //        toolbar.setTitle(getTitle());
 //
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-//
-//        if (findViewById(R.id.shelter_detail_container) != null) {
-//            // The detail container view will be present only in the
-//            // large-screen layouts (res/values-w900dp).
-//            // If this view is present, then the
-//            // activity should be in two-pane mode.
-//            mTwoPane = true;
-//        }
 //
 //        View recyclerView = findViewById(R.id.shelter_list);
 //        assert recyclerView != null;
@@ -67,14 +48,51 @@ public class ShelterListActivity extends AppCompatActivity {
 //    }
 //
 //    private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-//        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, DummyContent.ITEMS, mTwoPane));
+//        Model model = Model.getInstance();
+//        recyclerView.setAdapter(new SimpleShelterRecyclerViewAdapter(model.getShelters()));
 //    }
 //
-//    public static class SimpleItemRecyclerViewAdapter
-//            extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
+//    public class SimpleShelterRecyclerViewAdapter
+//            extends RecyclerView.Adapter<SimpleShelterRecyclerViewAdapter.ViewHolder> {
 //
-//        private final List<Shelter> mValues;
-//        private final boolean mTwoPane;
+//        private final List<Shelter> mShelters;
+//
+//        public SimpleCourseRecyclerViewAdapter(List<Shelter> items) {
+//            mShelters = items;
+//        }
+//
+//        @Override
+//        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+//            /*
+//
+//              This sets up the view for each individual item in the recycler display
+//              To edit the actual layout, we would look at: res/layout/course_list_content.xml
+//              If you look at the example file, you will see it currently just 2 TextView elements
+//             */
+//            View view = LayoutInflater.from(parent.getContext())
+//                    .inflate(R.layout.course_list_content, parent, false);
+//            return new ViewHolder(view);
+//        }
+//
+//        public class ViewHolder extends RecyclerView.ViewHolder {
+//            public final View mView;
+//            public final TextView mIdView;
+//            public final TextView mContentView;
+//            public Shelter mShelter;
+//
+//            public ViewHolder(View view) {
+//                super(view);
+//                mView = view;
+//                mIdView = (TextView) view.findViewById(R.id.id);
+//                mContentView = (TextView) view.findViewById(R.id.content);
+//            }
+//
+//            @Override
+//            public String toString() {
+//                return super.toString() + " '" + mContentView.getText() + "'";
+//            }
+//        }
+//
 //        private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -96,14 +114,6 @@ public class ShelterListActivity extends AppCompatActivity {
 //                }
 //            }
 //        };
-//
-//        SimpleItemRecyclerViewAdapter(ShelterListActivity parent,
-//                                      List<DummyContent.DummyItem> items,
-//                                      boolean twoPane) {
-//            mValues = items;
-//            mParentActivity = parent;
-//            mTwoPane = twoPane;
-//        }
 //
 //        @Override
 //        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -136,5 +146,5 @@ public class ShelterListActivity extends AppCompatActivity {
 //                mContentView = (TextView) view.findViewById(R.id.content);
 //            }
 //        }
-//    }
+// }
 }

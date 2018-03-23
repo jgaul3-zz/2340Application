@@ -53,7 +53,7 @@ public class Model {
 
 
     /** Null User when user isn't found. */
-    public final User nullUser = new User("No such user", "No such password");
+    public final User nullUser = new User("No such user", "");
 
     /** Null Shelter when shelter isn't found. */
     private final Shelter nullShelter = new Shelter(0, "Shelter doesn't exist",
@@ -65,20 +65,18 @@ public class Model {
         _users = new ArrayList<>();
         _shelters = new ArrayList<>();
 
-        dummyData();
-
-    }
-
-    private void dummyData() {
-        addUser(new User("Admin", "adminpass", Role.ADMIN));
-        addUser(new User("HomelessGuy", "homelesspass", Role.HOMELESS));
-        addUser(new User("ShelterWorker", "workerpass", Role.EMPLOYEE));
     }
 
     /** Getters */
     public ArrayList<User> getUsers() { return _users; }
 
     public ArrayList<Shelter> getShelters() { return _shelters; }
+
+    public Shelter getCurrentShelter() { return _currentShelter; }
+    public void setCurrentShelter(Shelter s) { _currentShelter = s; }
+
+    public User getCurrentUser() { return _currentUser; }
+    public void setCurrentUser(User u) { _currentUser = u; }
 
     /**
      * adds a user to the app if they don't already exist.
@@ -132,14 +130,16 @@ public class Model {
         return _shelters.remove(shelter);
     }
 
-//    Charleston Commit
 
-//    /**
-//     * given a username, returns the user if they exist.
-//     *
-//     * @param key the id
-//     * @return the shelter or nullShelter
-//     */
+
+    /**
+     * Charleston Commit
+     *
+     * given a username, returns the user if they exist.
+     *
+     * @param key the id
+     * @return the shelter or nullShelter
+     */
     public Shelter findShelterById(int key) {
         for (Shelter d : _shelters) {
             if (d.getKey() == key) return d;
@@ -154,6 +154,7 @@ public class Model {
      * @return the user or nullUser
      */
     public User getUserByUsername(String name) {
+
         for (User u : _users)
         {
             if (u.getUsername().toLowerCase().equals(name.toLowerCase())) return u;
@@ -163,19 +164,15 @@ public class Model {
     }
 
     /**
-     *  given credentials determines whether they are valid.
+     *  given credentials, determines whether they are valid
      *
      * @param name the username
      * @param pass the password
      * @return the result
      */
     public boolean verifyUser(String name, String pass) {
-        for (User u : _users)
-        {
-            if (u.getUsername().toLowerCase().equals(name.toLowerCase())
-                    && u.getPassword().equals(pass)) return true;
-        }
-
-        return false;
+        return getUserByUsername(name).checkPassword(pass);
     }
+
+
 }

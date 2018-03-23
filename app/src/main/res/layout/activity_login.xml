@@ -31,7 +31,7 @@
                     android:id="@+id/username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Username"
+                    android:hint="Email Address"
                     android:inputType="text"
                     android:maxLines="1"
                     android:singleLine="true" />
@@ -62,8 +62,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:layout_marginBottom="24dp"
                 android:text="Sign in"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/regLink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:text="Need an account? Register here."
+                android:gravity="center"
+                android:textSize="16dip"
+                android:clickable="true" />
 
         </LinearLayout>
     </ScrollView>

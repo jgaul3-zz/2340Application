@@ -163,5 +163,15 @@ public class User {
         return _name + " " + _gender;
     }
 
+    /**
+     * Verify the password passed into this user
+     *
+     * @param pass attempted password
+     * @return if they match
+     */
+    public boolean checkPassword(String pass) {
+        return pass.equals(_password);
+    }
+
 
 }
