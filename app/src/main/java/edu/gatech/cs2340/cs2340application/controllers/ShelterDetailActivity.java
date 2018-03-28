@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import edu.gatech.cs2340.cs2340application.R;
+import edu.gatech.cs2340.cs2340application.model.DatabaseTools;
+import edu.gatech.cs2340.cs2340application.model.FirebaseTools;
 import edu.gatech.cs2340.cs2340application.model.Model;
 import edu.gatech.cs2340.cs2340application.model.Shelter;
 
@@ -35,6 +37,8 @@ public class ShelterDetailActivity extends AppCompatActivity {
     EditText numberOfBeds;
     //FloatingActionButton bedReservationButton;
     Button cancelReservation;
+
+    DatabaseTools tools;
 //
 
     @Override
@@ -43,6 +47,7 @@ public class ShelterDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_shelter_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
+        tools = new FirebaseTools();
 
         FloatingActionButton bedReservationButton = (FloatingActionButton) findViewById(R.id.fab);
         bedReservationButton.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +75,7 @@ public class ShelterDetailActivity extends AppCompatActivity {
             if (currentShelter != null) {
                 name.setText("Name: " + currentShelter.getName());
                 capacity.setText("Capacity: " + currentShelter.getCapacity());
-                vacancy.setText("Vacancies: "  + (Integer.parseInt(currentShelter.getVacancy()) - currentShelter.getOccupancy()));
+                vacancy.setText("Open Beds: "  + currentShelter.getVacancy());
                 gender.setText("Restrictions: " + currentShelter.getRestrictions());
                 longitude.setText("Longitude: " + currentShelter.getLongitude());
                 latitude.setText("Latitude: " + currentShelter.getLatitude());
@@ -85,11 +90,11 @@ public class ShelterDetailActivity extends AppCompatActivity {
             bedReservationButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     int inputBeds = Integer.parseInt(numberOfBeds.getText().toString());
-                    int curVacancies = Integer.parseInt(currentShelter.getVacancy());
+                    int curVacancies = currentShelter.getVacancy();
                     System.out.println(inputBeds);
                     System.out.println(curVacancies);
                     if (curVacancies >= inputBeds) {
-                        currentShelter.setVacancy("" + (curVacancies - inputBeds));
+                        currentShelter.setOccupancy(currentShelter.getOccupancy() + inputBeds);
                         vacancy.setText("Vacancies: " + currentShelter.getVacancy());
                         Toast toast = Toast.makeText(getApplicationContext(), inputBeds + " reservation(s) made!",
                                 Toast.LENGTH_LONG);
@@ -99,19 +104,18 @@ public class ShelterDetailActivity extends AppCompatActivity {
                                 Toast.LENGTH_LONG);
                         toast.show();
                     }
-                    System.out.println(inputBeds);
-                    System.out.println(currentShelter.getVacancy());
-                    System.out.println(curVacancies);
+                    tools.updateShelter(currentShelter);
                 }
             });
 
             cancelReservation.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     int currNumOfBeds = numberOfBeds.getText().toString().equals("") ? 0 : Integer.parseInt(numberOfBeds.getText().toString());
-                    int vacancy = Integer.parseInt(currentShelter.getVacancy());
-                    if (vacancy < Integer.parseInt(currentShelter.getCapacity())) {
-                        currentShelter.setVacancy("" + vacancy + currNumOfBeds);
+                    if (currNumOfBeds <= currentShelter.getOccupancy()) {
+                        currentShelter.setOccupancy(currentShelter.getOccupancy() - currNumOfBeds);
                     }
+                    vacancy.setText("Vacancies: " + currentShelter.getVacancy());
+                    tools.updateShelter(currentShelter);
                 }
             });
 
