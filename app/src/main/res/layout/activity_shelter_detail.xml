@@ -74,9 +74,20 @@
             android:layout_marginBottom="10dp"
             android:text="Capacity:"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            app:layout_constraintBottom_toTopOf="@+id/genderDetailLabel"
+            app:layout_constraintBottom_toTopOf="@+id/vacancyDetailLabel"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/addressDetailLabel" />
+
+        <TextView
+            android:id="@+id/vacancyDetailLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="Vacancies:"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            app:layout_constraintBottom_toTopOf="@+id/genderDetailLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/capacityDetailLabel" />
 
         <TextView
             android:id="@+id/genderDetailLabel"
@@ -89,7 +100,7 @@
             app:layout_constraintBottom_toTopOf="@+id/latitudeDetailLabel"
             app:layout_constraintEnd_toEndOf="@+id/latitudeDetailLabel"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/capacityDetailLabel"
+            app:layout_constraintTop_toBottomOf="@+id/vacancyDetailLabel"
             android:layout_marginRight="11dp" />
 
         <TextView
