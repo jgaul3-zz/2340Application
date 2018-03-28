@@ -60,6 +60,7 @@ public class FirebaseTools implements DatabaseTools {
                 FirebaseUser curUser = mAuth.getCurrentUser();
                 String key = curUser.getEmail().replace(".","").toLowerCase();
                 mDatabase.child("users").child(key).setValue(new User(email, password, role));
+
                 return true;
             }
             else
