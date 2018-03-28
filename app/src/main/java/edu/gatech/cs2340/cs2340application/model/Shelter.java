@@ -101,12 +101,12 @@ public class Shelter {
     /**
      * Makes a new shelter
      */
-    public Shelter(int key, String name, String capacity, double latitude, double longitude, String address,
-                   String phoneNumber, String notes) {
+    public Shelter(int key, String name, String capacity, int occupancy, double latitude, double longitude,
+                   String address, String phoneNumber, String notes) {
         _key = key;
         _name = name;
         _capacity = capacity;
-        _occupancy = 0;
+        _occupancy = occupancy;
         _latitude = latitude;
         _longitude = longitude;
         _address = address;
@@ -116,6 +116,14 @@ public class Shelter {
         _restrictions = new ArrayList<>();
         _homeless = new ArrayList<>();
         _employees = new ArrayList<>();
+    }
+
+    /**
+     * Makes a new shelter
+     */
+    public Shelter(int key, String name, String capacity, double latitude, double longitude, String address,
+                   String phoneNumber, String notes) {
+        this(key, name, capacity, 0, latitude, longitude, address, phoneNumber, notes);
     }
 
     /**

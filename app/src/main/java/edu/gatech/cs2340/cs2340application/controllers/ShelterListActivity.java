@@ -4,6 +4,11 @@ import android.support.v7.app.AppCompatActivity;
 
 
 import edu.gatech.cs2340.cs2340application.controllers.ShelterDetailActivity;
+import edu.gatech.cs2340.cs2340application.model.Model;
+import edu.gatech.cs2340.cs2340application.model.Shelter;
+import edu.gatech.cs2340.cs2340application.R;
+
+import java.util.List;
 
 /**
  * An activity representing a list of Shelters. This activity
