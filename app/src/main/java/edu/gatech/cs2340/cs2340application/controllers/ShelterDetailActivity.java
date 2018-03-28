@@ -6,7 +6,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import edu.gatech.cs2340.cs2340application.R;
 import edu.gatech.cs2340.cs2340application.model.Model;
@@ -29,6 +32,9 @@ public class ShelterDetailActivity extends AppCompatActivity {
     TextView latitude;
     TextView longitude;
     TextView phoneNumber;
+    EditText numberOfBeds;
+    //FloatingActionButton bedReservationButton;
+    Button cancelReservation;
 //
 
     @Override
@@ -60,11 +66,11 @@ public class ShelterDetailActivity extends AppCompatActivity {
         phoneNumber = findViewById(R.id.phoneNumberDetailLabel);
 
 
-            Shelter currentShelter = model.findShelterById(model.getCurrentShelterId());
+            final Shelter currentShelter = model.findShelterById(model.getCurrentShelterId());
             if (currentShelter != null) {
                 name.setText("Name: " + currentShelter.getName());
                 capacity.setText("Capacity: " + currentShelter.getCapacity());
-                vacancy.setText("Vacancies: " + (Integer.parseInt(currentShelter.getCapacity()) - currentShelter.getOccupancy()));
+                vacancy.setText("Vacancies: "  + (Integer.parseInt(currentShelter.getVacancy()) - currentShelter.getOccupancy()));
                 gender.setText("Restrictions: " + currentShelter.getRestrictions());
                 longitude.setText("Longitude: " + currentShelter.getLongitude());
                 latitude.setText("Latitude: " + currentShelter.getLatitude());
@@ -72,6 +78,42 @@ public class ShelterDetailActivity extends AppCompatActivity {
                 phoneNumber.setText("Phone Number: " + currentShelter.getPhoneNumber());
 
             }
+
+            numberOfBeds = (EditText) findViewById(R.id.number_of_beds);
+            cancelReservation = (Button) findViewById(R.id.cancel_Button);
+
+            bedReservationButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    int inputBeds = Integer.parseInt(numberOfBeds.getText().toString());
+                    int curVacancies = Integer.parseInt(currentShelter.getVacancy());
+                    System.out.println(inputBeds);
+                    System.out.println(curVacancies);
+                    if (curVacancies >= inputBeds) {
+                        currentShelter.setVacancy("" + (curVacancies - inputBeds));
+                        vacancy.setText("Vacancies: " + currentShelter.getVacancy());
+                        Toast toast = Toast.makeText(getApplicationContext(), inputBeds + " reservation(s) made!",
+                                Toast.LENGTH_LONG);
+                        toast.show();
+                    } else {
+                        Toast toast = Toast.makeText(getApplicationContext(), "Sorry, there are " + curVacancies + " vacancies at this time.",
+                                Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                    System.out.println(inputBeds);
+                    System.out.println(currentShelter.getVacancy());
+                    System.out.println(curVacancies);
+                }
+            });
+
+            cancelReservation.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    int currNumOfBeds = numberOfBeds.getText().toString().equals("") ? 0 : Integer.parseInt(numberOfBeds.getText().toString());
+                    int vacancy = Integer.parseInt(currentShelter.getVacancy());
+                    if (vacancy < Integer.parseInt(currentShelter.getCapacity())) {
+                        currentShelter.setVacancy("" + vacancy + currNumOfBeds);
+                    }
+                }
+            });
 
 
     }

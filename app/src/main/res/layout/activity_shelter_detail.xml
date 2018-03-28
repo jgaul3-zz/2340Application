@@ -45,11 +45,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="28dp"
+            android:layout_marginEnd="156dp"
             android:text="Name:"
             android:textAppearance="?android:attr/textAppearanceLarge"
             app:layout_constraintBottom_toTopOf="@+id/addressDetailLabel"
+            app:layout_constraintEnd_toStartOf="@+id/fab"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginRight="156dp" />
 
 
         <TextView
@@ -108,11 +111,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="269dp"
+            android:layout_marginEnd="115dp"
             android:text="Phone Number:"
             android:textAppearance="?android:attr/textAppearanceLarge"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/cancel_Button"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/longitudeDetailLabel" />
+            app:layout_constraintTop_toBottomOf="@+id/longitudeDetailLabel"
+            android:layout_marginRight="115dp" />
 
         <TextView
             android:id="@+id/latitudeDetailLabel"
@@ -139,19 +145,48 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/latitudeDetailLabel" />
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:layout_marginEnd="124dp"
+            android:layout_marginTop="300dp"
+
+            app:backgroundTint="@color/colorAccent"
+            app:layout_anchorGravity="top|end"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/phoneNumberDetailLabel"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/basic_jordan_bed"
+            android:layout_marginRight="124dp" />
+
+
+        <EditText
+            android:id="@+id/number_of_beds"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:ems="10"
+            android:hint="# of beds reservations"
+            android:inputType="number"
+            app:layout_constraintStart_toStartOf="@+id/phoneNumberDetailLabel"
+            app:layout_constraintTop_toBottomOf="@+id/phoneNumberDetailLabel" />
+
+        <Button
+            android:id="@+id/cancel_Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="28dp"
+            android:text="Cancel"
+            app:layout_constraintBottom_toBottomOf="@+id/fab"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/phoneNumberDetailLabel"
+            android:layout_marginRight="28dp" />
+
 
     </android.support.constraint.ConstraintLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|start"
-        android:layout_margin="@dimen/fab_margin"
-        app:backgroundTint="@color/colorAccent"
-        app:layout_anchor="@+id/shelter_detail_container"
-        app:layout_anchorGravity="top|end"
-        app:srcCompat="@drawable/basic_jordan_bed" />
+
 
 
 </android.support.design.widget.CoordinatorLayout>
