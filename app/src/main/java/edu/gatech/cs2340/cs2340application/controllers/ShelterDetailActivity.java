@@ -24,6 +24,7 @@ public class ShelterDetailActivity extends AppCompatActivity {
     TextView name;
     TextView shelterAddress;
     TextView capacity;
+    TextView vacancy;
     TextView gender;
     TextView latitude;
     TextView longitude;
@@ -52,6 +53,7 @@ public class ShelterDetailActivity extends AppCompatActivity {
         name = findViewById(R.id.nameDetailLabel);
         shelterAddress = findViewById(R.id.addressDetailLabel);
         capacity = findViewById(R.id.capacityDetailLabel);
+        vacancy = findViewById(R.id.vacancyDetailLabel);
         gender = findViewById(R.id.genderDetailLabel);
         latitude = findViewById(R.id.latitudeDetailLabel);
         longitude = findViewById(R.id.longitudeDetailLabel);
@@ -62,6 +64,7 @@ public class ShelterDetailActivity extends AppCompatActivity {
             if (currentShelter != null) {
                 name.setText("Name: " + currentShelter.getName());
                 capacity.setText("Capacity: " + currentShelter.getCapacity());
+                vacancy.setText("Vacancies: " + (Integer.parseInt(currentShelter.getCapacity()) - currentShelter.getOccupancy()));
                 gender.setText("Restrictions: " + currentShelter.getRestrictions());
                 longitude.setText("Longitude: " + currentShelter.getLongitude());
                 latitude.setText("Latitude: " + currentShelter.getLatitude());
