@@ -39,4 +39,19 @@ public interface DatabaseTools {
      * Populates the shelter list on opening.
      */
     public void loadShelters();
+
+    /**
+     * Given a shelter, updates its info in the database.
+     *
+     * @param shelter the shelter to be updated
+     */
+    public void updateShelter(Shelter shelter);
+
+    /**
+     * Given a user, updates their info in the database.
+     *
+     * @param user the user to be updated
+     */
+    public void updateUser(User user);
+
 }

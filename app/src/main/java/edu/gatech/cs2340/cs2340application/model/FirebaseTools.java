@@ -58,7 +58,8 @@ public class FirebaseTools implements DatabaseTools {
             if (t.isSuccessful())
             {
                 FirebaseUser curUser = mAuth.getCurrentUser();
-                mDatabase.child("users").child(curUser.getUid()).setValue(new User(email, password, role));
+                String key = curUser.getEmail().replace(".","").toLowerCase();
+                mDatabase.child("users").child(key).setValue(new User(email, password, role));
                 return true;
             }
             else
@@ -143,5 +144,26 @@ public class FirebaseTools implements DatabaseTools {
                 Log.e("Firebase", "Loading shelters went wrong: " + databaseError.getMessage());
             }
         });
+    }
+
+    /**
+     * Given a shelter, updates its info in the database.
+     *
+     * @param shelter the shelter to be updated
+     */
+    public void updateShelter(Shelter shelter)
+    {
+        mDatabase.child("shelters").child("" + shelter.getKey()).setValue(shelter);
+    }
+
+    /**
+     * Given a user, updates their info in the database.
+     *
+     * @param user the user to be updated
+     */
+    public void updateUser(User user)
+    {
+        mDatabase.child("users").child(user.getUsername().replace(".",""))
+                .setValue(user);
     }
 }
