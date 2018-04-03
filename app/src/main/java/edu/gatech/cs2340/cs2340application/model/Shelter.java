@@ -49,9 +49,7 @@ public class Shelter {
 
     /** this shelters's age range */
     private AgeRange userAgeRange;
-    /* **********************
-     * Getters and setters
-     */
+
 
     public AgeRange getAgeRange() { return userAgeRange; }
     public void setAgeRange(AgeRange uAgeRange) {  userAgeRange = uAgeRange; }
@@ -91,16 +89,17 @@ public class Shelter {
     public List<User> getEmployees() { return _employees; }
     public void setEmployees(List<User> employees) { _employees = employees; }
 
+    public int getVacancy() {return Integer.parseInt(_capacity) - _occupancy;}
 
     /**
      * Makes a new shelter
      */
-    public Shelter(int key, String name, String capacity, double latitude, double longitude, String address,
-                   String phoneNumber, String notes) {
+    public Shelter(int key, String name, String capacity, int occupancy, double latitude, double longitude,
+                   String address, String phoneNumber, String notes) {
         _key = key;
         _name = name;
         _capacity = capacity;
-        _occupancy = 0;
+        _occupancy = occupancy;
         _latitude = latitude;
         _longitude = longitude;
         _address = address;
@@ -109,6 +108,14 @@ public class Shelter {
         _restrictions = new ArrayList<>();
         _homeless = new ArrayList<>();
         _employees = new ArrayList<>();
+    }
+
+    /**
+     * Makes a new shelter
+     */
+    public Shelter(int key, String name, String capacity, double latitude, double longitude, String address,
+                   String phoneNumber, String notes) {
+        this(key, name, capacity, 0, latitude, longitude, address, phoneNumber, notes);
     }
 
     /**

@@ -28,27 +28,42 @@ public class OpeningScreen extends AppCompatActivity {
 
         //Prep buttons
         Button userButton = findViewById(R.id.loginUser);
+        Button registerButton = findViewById(R.id.loginRegister);
         Button guestButton = findViewById(R.id.loginGuest);
 
-        //Loads in CSV data
-        readSDFile();
+        //Tries to load shelters from database.
+//        DatabaseTools tools = new FirebaseTools();
+//        tools.loadShelters();
+//        Model model = Model.getInstance();
+
+//        if (model.getShelters().isEmpty())
+//        {
+//            //Loads in CSV data
+//            readSDFile();
+//        }
 
         userButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Log.i("test", "User Button Pressed.");
+                Intent toLogin = new Intent(OpeningScreen.this, LoginActivity.class);
+                OpeningScreen.this.startActivity(toLogin);
+            }
+        });
 
+        registerButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
                 Intent toLogin = new Intent(OpeningScreen.this, RegistrationScreen.class);
                 OpeningScreen.this.startActivity(toLogin);
             }
-        }); 
+        });
 
         guestButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Log.i("test", "Guest Button Pressed.");
 
                 Intent toApp = new Intent(OpeningScreen.this, AppScreen.class);
                 OpeningScreen.this.startActivity(toApp);

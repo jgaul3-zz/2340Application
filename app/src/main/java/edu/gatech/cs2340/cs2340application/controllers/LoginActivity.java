@@ -20,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -55,6 +56,15 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setupActionBar();
+
+        TextView regButton = findViewById(R.id.regLink);
+        regButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toReg = new Intent(LoginActivity.this, RegistrationScreen.class);
+                LoginActivity.this.startActivity(toReg);
+            }
+        });
 
         // Set up the login form.
         mUsernameView = findViewById(R.id.username);
@@ -101,12 +111,16 @@ public class LoginActivity extends AppCompatActivity {
     private void attemptLogin() {
 
         final Model model = Model.getInstance();
+        DatabaseTools tools = new FirebaseTools();
 
         // Store values at the time of the login attempt.
         String username = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
 
-        if (model.verifyUser(username, password))
+        if (username.isEmpty() || password.isEmpty()) {
+            Toast.makeText(LoginActivity.this, "Field is blank", Toast.LENGTH_SHORT).show();
+        }
+        else if (tools.loginUserEmail(username, password))
         {
             Intent toApp = new Intent(LoginActivity.this, AppScreen.class);
             LoginActivity.this.startActivity(toApp);
@@ -115,16 +129,6 @@ public class LoginActivity extends AppCompatActivity {
         {
             Toast.makeText(LoginActivity.this, "Incorrect Info", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
-    }
-
-    private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
     }
 
     @Override

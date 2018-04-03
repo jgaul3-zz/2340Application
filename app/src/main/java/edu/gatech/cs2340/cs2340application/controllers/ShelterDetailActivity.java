@@ -6,9 +6,14 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import edu.gatech.cs2340.cs2340application.R;
+import edu.gatech.cs2340.cs2340application.model.DatabaseTools;
+import edu.gatech.cs2340.cs2340application.model.FirebaseTools;
 import edu.gatech.cs2340.cs2340application.model.Model;
 import edu.gatech.cs2340.cs2340application.model.Shelter;
 
@@ -24,10 +29,16 @@ public class ShelterDetailActivity extends AppCompatActivity {
     TextView name;
     TextView shelterAddress;
     TextView capacity;
+    TextView vacancy;
     TextView gender;
     TextView latitude;
     TextView longitude;
     TextView phoneNumber;
+    EditText numberOfBeds;
+    //FloatingActionButton bedReservationButton;
+    Button cancelReservation;
+
+    DatabaseTools tools;
 //
 
     @Override
@@ -36,6 +47,7 @@ public class ShelterDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_shelter_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
+        tools = new FirebaseTools();
 
         FloatingActionButton bedReservationButton = (FloatingActionButton) findViewById(R.id.fab);
         bedReservationButton.setOnClickListener(new View.OnClickListener() {
@@ -52,16 +64,18 @@ public class ShelterDetailActivity extends AppCompatActivity {
         name = findViewById(R.id.nameDetailLabel);
         shelterAddress = findViewById(R.id.addressDetailLabel);
         capacity = findViewById(R.id.capacityDetailLabel);
+        vacancy = findViewById(R.id.vacancyDetailLabel);
         gender = findViewById(R.id.genderDetailLabel);
         latitude = findViewById(R.id.latitudeDetailLabel);
         longitude = findViewById(R.id.longitudeDetailLabel);
         phoneNumber = findViewById(R.id.phoneNumberDetailLabel);
 
 
-            Shelter currentShelter = model.findShelterById(model.getCurrentShelterId());
+            final Shelter currentShelter = model.findShelterById(model.getCurrentShelterId());
             if (currentShelter != null) {
                 name.setText("Name: " + currentShelter.getName());
                 capacity.setText("Capacity: " + currentShelter.getCapacity());
+                vacancy.setText("Open Beds: "  + currentShelter.getVacancy());
                 gender.setText("Restrictions: " + currentShelter.getRestrictions());
                 longitude.setText("Longitude: " + currentShelter.getLongitude());
                 latitude.setText("Latitude: " + currentShelter.getLatitude());
@@ -69,6 +83,41 @@ public class ShelterDetailActivity extends AppCompatActivity {
                 phoneNumber.setText("Phone Number: " + currentShelter.getPhoneNumber());
 
             }
+
+            numberOfBeds = (EditText) findViewById(R.id.number_of_beds);
+            cancelReservation = (Button) findViewById(R.id.cancel_Button);
+
+            bedReservationButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    int inputBeds = Integer.parseInt(numberOfBeds.getText().toString());
+                    int curVacancies = currentShelter.getVacancy();
+                    System.out.println(inputBeds);
+                    System.out.println(curVacancies);
+                    if (curVacancies >= inputBeds) {
+                        currentShelter.setOccupancy(currentShelter.getOccupancy() + inputBeds);
+                        vacancy.setText("Vacancies: " + currentShelter.getVacancy());
+                        Toast toast = Toast.makeText(getApplicationContext(), inputBeds + " reservation(s) made!",
+                                Toast.LENGTH_LONG);
+                        toast.show();
+                    } else {
+                        Toast toast = Toast.makeText(getApplicationContext(), "Sorry, there are " + curVacancies + " vacancies at this time.",
+                                Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                    tools.updateShelter(currentShelter);
+                }
+            });
+
+            cancelReservation.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    int currNumOfBeds = numberOfBeds.getText().toString().equals("") ? 0 : Integer.parseInt(numberOfBeds.getText().toString());
+                    if (currNumOfBeds <= currentShelter.getOccupancy()) {
+                        currentShelter.setOccupancy(currentShelter.getOccupancy() - currNumOfBeds);
+                    }
+                    vacancy.setText("Vacancies: " + currentShelter.getVacancy());
+                    tools.updateShelter(currentShelter);
+                }
+            });
 
 
     }
