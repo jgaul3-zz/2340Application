@@ -50,7 +50,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         for (Shelter shelter:model.getSearchShelters()) {
             LatLng position = new LatLng(shelter.getLatitude(), shelter.getLongitude());
-            mMap.addMarker(new MarkerOptions().position(position).title(shelter.getName()));
+            mMap.addMarker(new MarkerOptions().position(position).title(shelter.getName()+ " "+ shelter.getPhoneNumber()));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
         }
     }
