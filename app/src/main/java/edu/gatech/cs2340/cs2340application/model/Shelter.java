@@ -17,7 +17,7 @@ public class Shelter {
     private String _name;
 
     /** this shelter's max capacity */
-    private String _capacity;
+    private int _capacity;
 
     /** this shelter's current occupancy */
     private int _occupancy;
@@ -59,8 +59,8 @@ public class Shelter {
     public String getName() { return _name; }
     public void setName(String name) { _name = name; }
 
-    public String getCapacity() { return _capacity; }
-    public void setCapacity(String capacity) { _capacity = capacity; }
+    public int getCapacity() { return _capacity; }
+    public void setCapacity(int capacity) { _capacity = capacity; }
 
     public int getOccupancy() { return _occupancy; }
     public void setOccupancy(int occupancy) { _occupancy = occupancy; }
@@ -89,12 +89,12 @@ public class Shelter {
     public List<User> getEmployees() { return _employees; }
     public void setEmployees(List<User> employees) { _employees = employees; }
 
-    public int getVacancy() {return Integer.parseInt(_capacity) - _occupancy;}
+    public int getVacancy() {return _capacity - _occupancy;}
 
     /**
      * Makes a new shelter
      */
-    public Shelter(int key, String name, String capacity, int occupancy, double latitude, double longitude,
+    public Shelter(int key, String name, int capacity, int occupancy, double latitude, double longitude,
                    String address, String phoneNumber, String notes) {
         _key = key;
         _name = name;
@@ -113,7 +113,7 @@ public class Shelter {
     /**
      * Makes a new shelter
      */
-    public Shelter(int key, String name, String capacity, double latitude, double longitude, String address,
+    public Shelter(int key, String name, int capacity, double latitude, double longitude, String address,
                    String phoneNumber, String notes) {
         this(key, name, capacity, 0, latitude, longitude, address, phoneNumber, notes);
     }

@@ -85,6 +85,30 @@ public class FirebaseTools implements DatabaseTools {
      */
     public boolean loginUserEmail(String email, String password)
     {
+        if (email == null)
+        {
+            Log.e("FirebaseLogin", "Null User");
+            return false;
+        }
+
+        if (password == null)
+        {
+            Log.e("FirebaseLogin", "Null Password");
+            return false;
+        }
+
+        if (email.isEmpty())
+        {
+            Log.e("FirebaseLogin", "Empty User");
+            return false;
+        }
+
+        if (password.isEmpty())
+        {
+            Log.e("FirebaseLogin", "Empty Password");
+            return false;
+        }
+
         try
         {
             Task t = mAuth.signInWithEmailAndPassword(email, password);
@@ -116,7 +140,6 @@ public class FirebaseTools implements DatabaseTools {
     public void loadShelters()
     {
         DatabaseReference shelterRef = mDatabase.child("shelters");
-        Log.e("database", "Made it");
 
         shelterRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -125,17 +148,15 @@ public class FirebaseTools implements DatabaseTools {
                 Log.e("database", "Made it again");
                 for (DataSnapshot ds : dataSnapshot.getChildren())
                 {
-                    Log.e("LoadShelters", "Adding:" + ds.getValue());
                     toAdd = new Shelter (ds.child("key").getValue(Integer.class),
                             ds.child("name").getValue(String.class),
-                            ds.child("capacity").getValue(String.class),
+                            ds.child("capacity").getValue(Integer.class),
                             ds.child("occupancy").getValue(Integer.class),
                             ds.child("latitude").getValue(Double.class),
                             ds.child("longitude").getValue(Double.class),
                             ds.child("address").getValue(String.class),
                             ds.child("phoneNumber").getValue(String.class),
                             ds.child("notes").getValue(String.class));
-                    Log.e("database", "Adding: " + toAdd);
                     model.addShelter(toAdd);
                 }
             }
@@ -167,4 +188,6 @@ public class FirebaseTools implements DatabaseTools {
         mDatabase.child("users").child(user.getUsername().replace(".",""))
                 .setValue(user);
     }
+
+
 }

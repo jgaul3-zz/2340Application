@@ -58,7 +58,7 @@ public class Model {
 
     /** Null Shelter when shelter isn't found. */
     private final Shelter nullShelter = new Shelter(0, "Shelter doesn't exist",
-            "0", 0, 0, "", "",
+            0, 0, 0, "", "",
             "");
 
     private Model() {
