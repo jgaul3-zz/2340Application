@@ -28,6 +28,7 @@ public class Results extends AppCompatActivity {
 
         Button logOut = findViewById(R.id.logout);
         Button searchUp = findViewById(R.id.search);
+        Button mapScreen = findViewById(R.id.mapscreen);
         ListView shelterList = findViewById(R.id.shelterList);
 
         shelterList.setAdapter(new ArrayAdapter<>(
@@ -66,6 +67,17 @@ public class Results extends AppCompatActivity {
                 Log.i("test", "User Button Pressed.");
 
                 Intent toOpen = new Intent(Results.this, SearchSheltersActivity.class);
+                Results.this.startActivity(toOpen);
+            }
+        });
+
+        mapScreen.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Log.i("test", "Map Button Pressed.");
+
+                Intent toOpen = new Intent(Results.this, MapsActivity.class);
                 Results.this.startActivity(toOpen);
             }
         });

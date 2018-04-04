@@ -52,22 +52,6 @@ public class ShelterDetailActivity extends AppCompatActivity {
         tools = new FirebaseTools();
 
         FloatingActionButton bedReservationButton = (FloatingActionButton) findViewById(R.id.fab);
-        bedReservationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                // Add the functionality of reserving a bed
-
-                //Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
-                //        .setAction("Action", null).show();
-
-
-                Log.e("test", "User Button Pressed.");
-
-                Intent intent = new Intent(ShelterDetailActivity.this, MapsActivity.class);
-                startActivity(intent);
-            }
-        });
 
         name = findViewById(R.id.nameDetailLabel);
         shelterAddress = findViewById(R.id.addressDetailLabel);
@@ -79,22 +63,21 @@ public class ShelterDetailActivity extends AppCompatActivity {
         phoneNumber = findViewById(R.id.phoneNumberDetailLabel);
 
 
-            final Shelter currentShelter = model.findShelterById(model.getCurrentShelterId());
-            if (currentShelter != null) {
-                name.setText("Name: " + currentShelter.getName());
-                capacity.setText("Capacity: " + currentShelter.getCapacity());
-                vacancy.setText("Open Beds: "  + currentShelter.getVacancy());
-                gender.setText("Restrictions: " + currentShelter.getRestrictions());
-                longitude.setText("Longitude: " + currentShelter.getLongitude());
-                latitude.setText("Latitude: " + currentShelter.getLatitude());
-                shelterAddress.setText("Address: " + currentShelter.getAddress());
-                phoneNumber.setText("Phone Number: " + currentShelter.getPhoneNumber());
+        final Shelter currentShelter = model.findShelterById(model.getCurrentShelterId());
+        if (currentShelter != null) {
+            name.setText("Name: " + currentShelter.getName());
+            capacity.setText("Capacity: " + currentShelter.getCapacity());
+            vacancy.setText("Open Beds: "  + currentShelter.getVacancy());
+            gender.setText("Restrictions: " + currentShelter.getRestrictions());
+            longitude.setText("Longitude: " + currentShelter.getLongitude());
+            latitude.setText("Latitude: " + currentShelter.getLatitude());
+            shelterAddress.setText("Address: " + currentShelter.getAddress());
+            phoneNumber.setText("Phone Number: " + currentShelter.getPhoneNumber());
 
-            }
+        }
 
-            numberOfBeds = (EditText) findViewById(R.id.number_of_beds);
-        //Integer.parseInt(numberOfBeds.setText(0));
-            cancelReservation = (Button) findViewById(R.id.cancel_Button);
+        numberOfBeds = (EditText) findViewById(R.id.number_of_beds);
+        cancelReservation = (Button) findViewById(R.id.cancel_Button);
 
             bedReservationButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {

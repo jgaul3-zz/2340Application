@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,6 +27,7 @@ public class AppScreen extends AppCompatActivity {
 
         Button logOut = findViewById(R.id.logout);
         Button searchUp = findViewById(R.id.search);
+        Button mapScreen = findViewById(R.id.mapscreen);
         ListView shelterList = findViewById(R.id.shelterList);
 
         shelterList.setAdapter(new ArrayAdapter<>(
@@ -59,6 +61,15 @@ public class AppScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent toOpen = new Intent(AppScreen.this, SearchSheltersActivity.class);
+                AppScreen.this.startActivity(toOpen);
+            }
+        });
+
+        mapScreen.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent toOpen = new Intent(AppScreen.this, MapsActivity.class);
                 AppScreen.this.startActivity(toOpen);
             }
         });
