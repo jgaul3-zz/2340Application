@@ -93,37 +93,46 @@ public class ShelterDetailActivity extends AppCompatActivity {
             }
 
             numberOfBeds = (EditText) findViewById(R.id.number_of_beds);
+        //Integer.parseInt(numberOfBeds.setText(0));
             cancelReservation = (Button) findViewById(R.id.cancel_Button);
 
             bedReservationButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    int inputBeds = Integer.parseInt(numberOfBeds.getText().toString());
-                    int curVacancies = currentShelter.getVacancy();
-                    System.out.println(inputBeds);
-                    System.out.println(curVacancies);
-                    if (curVacancies >= inputBeds) {
-                        currentShelter.setOccupancy(currentShelter.getOccupancy() + inputBeds);
-                        vacancy.setText("Vacancies: " + currentShelter.getVacancy());
-                        Toast toast = Toast.makeText(getApplicationContext(), inputBeds + " reservation(s) made!",
-                                Toast.LENGTH_LONG);
-                        toast.show();
+                    if (numberOfBeds.getText().length() > 0) {
+
+                        int inputBeds = Integer.parseInt(numberOfBeds.getText().toString());
+
+                        int curVacancies = currentShelter.getVacancy();
+                        System.out.println(inputBeds);
+                        System.out.println(curVacancies);
+                        if (curVacancies >= inputBeds) {
+                            currentShelter.setOccupancy(currentShelter.getOccupancy() + inputBeds);
+                            vacancy.setText("Vacancies: " + currentShelter.getVacancy());
+                            Toast toast = Toast.makeText(getApplicationContext(), inputBeds + " reservation(s) made!",
+                                    Toast.LENGTH_LONG);
+                            toast.show();
+                        }  else {
+                            Toast toast = Toast.makeText(getApplicationContext(), "Sorry, there are " + curVacancies + " vacancies at this time.",
+                                    Toast.LENGTH_LONG);
+                            toast.show();
+                        }
+                        tools.updateShelter(currentShelter);
                     } else {
-                        Toast toast = Toast.makeText(getApplicationContext(), "Sorry, there are " + curVacancies + " vacancies at this time.",
+                        Toast toast = Toast.makeText(getApplicationContext(), "Please enter the number of beds you need",
                                 Toast.LENGTH_LONG);
                         toast.show();
                     }
-                    tools.updateShelter(currentShelter);
                 }
             });
 
             cancelReservation.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    int currNumOfBeds = numberOfBeds.getText().toString().equals("") ? 0 : Integer.parseInt(numberOfBeds.getText().toString());
-                    if (currNumOfBeds <= currentShelter.getOccupancy()) {
-                        currentShelter.setOccupancy(currentShelter.getOccupancy() - currNumOfBeds);
-                    }
-                    vacancy.setText("Vacancies: " + currentShelter.getVacancy());
-                    tools.updateShelter(currentShelter);
+                        int currNumOfBeds = numberOfBeds.getText().toString().equals("") ? 0 : Integer.parseInt(numberOfBeds.getText().toString());
+                        if (currNumOfBeds <= currentShelter.getOccupancy()) {
+                            currentShelter.setOccupancy(currentShelter.getOccupancy() - currNumOfBeds);
+                        }
+                        vacancy.setText("Vacancies: " + currentShelter.getVacancy());
+                        tools.updateShelter(currentShelter);
                 }
             });
 
