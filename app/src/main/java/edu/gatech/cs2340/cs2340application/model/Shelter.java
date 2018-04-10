@@ -11,7 +11,7 @@ import java.util.List;
 public class Shelter {
 
     /** this shelter's key number */
-    private int _key;
+    private final int _key;
 
     /** this shelter's name */
     private String _name;
@@ -50,9 +50,9 @@ public class Shelter {
     /** this shelters's age range */
     private AgeRange userAgeRange;
 
-
-    public AgeRange getAgeRange() { return userAgeRange; }
-    public void setAgeRange(AgeRange uAgeRange) {  userAgeRange = uAgeRange; }
+//
+//    public AgeRange getAgeRange() { return userAgeRange; }
+//    public void setAgeRange(AgeRange uAgeRange) {  userAgeRange = uAgeRange; }
 
     public int getKey() { return _key; }
 
@@ -60,34 +60,34 @@ public class Shelter {
     public void setName(String name) { _name = name; }
 
     public int getCapacity() { return _capacity; }
-    public void setCapacity(int capacity) { _capacity = capacity; }
+//    public void setCapacity(int capacity) { _capacity = capacity; }
 
     public int getOccupancy() { return _occupancy; }
     public void setOccupancy(int occupancy) { _occupancy = occupancy; }
 
     public double getLatitude() { return _latitude; }
-    public void setLatitude(double latitude) { _latitude = latitude; }
+//    public void setLatitude(double latitude) { _latitude = latitude; }
 
     public double getLongitude() { return _longitude; }
-    public void setLongitude(double longitude) { _longitude = longitude; }
+//    public void setLongitude(double longitude) { _longitude = longitude; }
 
     public String getAddress() { return _address; }
-    public void setAddress(String address) { _address = address; }
+//    public void setAddress(String address) { _address = address; }
 
     public String getPhoneNumber() { return _phoneNumber; }
-    public void setPhoneNumber(String phoneNumber) { _phoneNumber = phoneNumber; }
+//    public void setPhoneNumber(String phoneNumber) { _phoneNumber = phoneNumber; }
 
-    public String getNotes() { return _notes; }
-    public void setNotes(String notes) { _notes = notes; }
+//    public String getNotes() { return _notes; }
+//    public void setNotes(String notes) { _notes = notes; }
 
     public List<String> getRestrictions() { return _restrictions; }
     public void setRestrictions(List<String> restrictions) { _restrictions = restrictions; }
 
-    public List<User> getHomeless() { return _homeless; }
-    public void setHomeless(List<User> homeless) { _homeless = homeless; }
+//    public List<User> getHomeless() { return _homeless; }
+//    public void setHomeless(List<User> homeless) { _homeless = homeless; }
 
-    public List<User> getEmployees() { return _employees; }
-    public void setEmployees(List<User> employees) { _employees = employees; }
+//    public List<User> getEmployees() { return _employees; }
+//    public void setEmployees(List<User> employees) { _employees = employees; }
 
     public int getVacancy() {return _capacity - _occupancy;}
 

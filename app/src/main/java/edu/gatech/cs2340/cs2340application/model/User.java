@@ -17,7 +17,7 @@ public class User {
     private static int Next_Id = 0;
 
     /** this user's id number */
-    private int _id;
+    private final int _id;
 
     /** this user's username */
     private String _username;
@@ -40,9 +40,6 @@ public class User {
     /** this user's veteran */
     private boolean _veteran;
 
-
-    /** this user's contact information */
-    private String _contact;
 
     /* **********************
      * Getters and setters
@@ -90,7 +87,8 @@ public class User {
         _gender = gender;
         _age = age;
         _veteran = veteran;
-        _contact = contact;
+        /* this user's contact information */
+        String _contact = contact;
         _id = User.Next_Id++;
     }
 

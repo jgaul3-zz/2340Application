@@ -50,7 +50,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mUsernameView;
     private EditText mPasswordView;
     private View mProgressView;
-    private View mLoginFormView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
+                if ((id == EditorInfo.IME_ACTION_DONE) || (id == EditorInfo.IME_NULL)) {
                     attemptLogin();
                     return true;
                 }
@@ -90,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        mLoginFormView = findViewById(R.id.login_form);
+        View mLoginFormView = findViewById(R.id.login_form);
     }
 
     /**
@@ -100,7 +99,16 @@ public class LoginActivity extends AppCompatActivity {
     private void setupActionBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             // Show the Up button in the action bar.
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            try
+            {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            }
+            catch (NullPointerException e)
+            {
+                Log.e("Login",
+                        "Null Pointer Exception: " + e.getMessage());
+            }
+
         }
     }
 
@@ -125,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
         {
             if (model.getShelters().isEmpty())
             {
-                Log.e("Login", "DATABSE NOT LOADED CORRECTLY");
+                Log.e("Login", "DATABASE NOT LOADED CORRECTLY");
                 readSDFile();
             }
             Intent toApp = new Intent(LoginActivity.this, AppScreen.class);
@@ -200,21 +208,34 @@ public class LoginActivity extends AppCompatActivity {
             }
             scanner.close();
         } catch (Exception e) {
-            Log.e("dopnt", "error reading assets");
+            Log.e("Login", "error reading assets");
         }
 
     }
 
+    /**
+     * parses line of csv file.
+     * @param cvsLine incoming line
+     * @return List of elements of file
+     */
     public static List<String> parseLine(String cvsLine) {
         return parseLine(cvsLine, ',', '"');
     }
 
+    /**
+     * parses line given inputs
+     *
+     * @param cvsLine line itself
+     * @param separators whether commas or something else
+     * @param customQuote How sections are differentiated.
+     * @return the individual components
+     */
     public static List<String> parseLine(String cvsLine, char separators, char customQuote) {
 
         List<String> result = new ArrayList<>();
 
         //if empty, return!
-        if (cvsLine == null && cvsLine.isEmpty()) {
+        if ((cvsLine == null) && cvsLine.isEmpty()) {
             return result;
         }
 

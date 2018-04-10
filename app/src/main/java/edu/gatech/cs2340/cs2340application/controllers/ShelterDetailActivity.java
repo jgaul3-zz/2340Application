@@ -47,11 +47,11 @@ public class ShelterDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shelter_detail);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
+        Toolbar toolbar = findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
         tools = new FirebaseTools();
 
-        FloatingActionButton bedReservationButton = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton bedReservationButton = findViewById(R.id.fab);
 
         name = findViewById(R.id.nameDetailLabel);
         shelterAddress = findViewById(R.id.addressDetailLabel);
@@ -76,8 +76,8 @@ public class ShelterDetailActivity extends AppCompatActivity {
 
         }
 
-        numberOfBeds = (EditText) findViewById(R.id.number_of_beds);
-        cancelReservation = (Button) findViewById(R.id.cancel_Button);
+        numberOfBeds = findViewById(R.id.number_of_beds);
+        cancelReservation = findViewById(R.id.cancel_Button);
 
             bedReservationButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
@@ -86,8 +86,6 @@ public class ShelterDetailActivity extends AppCompatActivity {
                         int inputBeds = Integer.parseInt(numberOfBeds.getText().toString());
 
                         int curVacancies = currentShelter.getVacancy();
-                        System.out.println(inputBeds);
-                        System.out.println(curVacancies);
                         if (curVacancies >= inputBeds) {
                             currentShelter.setOccupancy(currentShelter.getOccupancy() + inputBeds);
                             vacancy.setText("Vacancies: " + currentShelter.getVacancy());

@@ -16,9 +16,11 @@ import edu.gatech.cs2340.cs2340application.R;
 import edu.gatech.cs2340.cs2340application.model.Model;
 import edu.gatech.cs2340.cs2340application.model.Shelter;
 
+/**
+ * Map Activity seen when completed search.
+ */
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
     Model model;
 
 
@@ -46,7 +48,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+        GoogleMap mMap = googleMap;
 
         for (Shelter shelter:model.getSearchShelters()) {
             LatLng position = new LatLng(shelter.getLatitude(), shelter.getLongitude());

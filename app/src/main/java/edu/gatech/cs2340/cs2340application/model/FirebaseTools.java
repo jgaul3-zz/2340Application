@@ -30,10 +30,13 @@ import edu.gatech.cs2340.cs2340application.model.*;
 
 public class FirebaseTools implements DatabaseTools {
 
-    private FirebaseAuth mAuth;
-    private DatabaseReference mDatabase;
-    private Model model;
+    private final FirebaseAuth mAuth;
+    private final DatabaseReference mDatabase;
+    private final Model model;
 
+    /**
+     * Instantiates tools to be used.
+     */
     public FirebaseTools()
     {
         mAuth = FirebaseAuth.getInstance();
@@ -58,8 +61,17 @@ public class FirebaseTools implements DatabaseTools {
             if (t.isSuccessful())
             {
                 FirebaseUser curUser = mAuth.getCurrentUser();
-                String key = curUser.getEmail().replace(".","").toLowerCase();
-                mDatabase.child("users").child(key).setValue(new User(email, password, role));
+                try
+                {
+                    String key = curUser.getEmail().replace(".","").toLowerCase();
+                    mDatabase.child("users").child(key).setValue(new User(email, password, role));
+                }
+                catch (NullPointerException e)
+                {
+                    Log.e("FirebaseRegistration",
+                            "Null Pointer Exception: " + e.getMessage());
+                    return false;
+                }
 
                 return true;
             }
@@ -148,15 +160,24 @@ public class FirebaseTools implements DatabaseTools {
                 Log.e("database", "Made it again");
                 for (DataSnapshot ds : dataSnapshot.getChildren())
                 {
-                    toAdd = new Shelter (ds.child("key").getValue(Integer.class),
-                            ds.child("name").getValue(String.class),
-                            ds.child("capacity").getValue(Integer.class),
-                            ds.child("occupancy").getValue(Integer.class),
-                            ds.child("latitude").getValue(Double.class),
-                            ds.child("longitude").getValue(Double.class),
-                            ds.child("address").getValue(String.class),
-                            ds.child("phoneNumber").getValue(String.class),
-                            ds.child("notes").getValue(String.class));
+                    try
+                    {
+                        toAdd = new Shelter (ds.child("key").getValue(Integer.class),
+                                ds.child("name").getValue(String.class),
+                                ds.child("capacity").getValue(Integer.class),
+                                ds.child("occupancy").getValue(Integer.class),
+                                ds.child("latitude").getValue(Double.class),
+                                ds.child("longitude").getValue(Double.class),
+                                ds.child("address").getValue(String.class),
+                                ds.child("phoneNumber").getValue(String.class),
+                                ds.child("notes").getValue(String.class));
+                    }
+                    catch (NullPointerException e)
+                    {
+                        Log.e("FirebaseRegistration",
+                                "Null Pointer Exception: " + e.getMessage());
+                        return;
+                    }
                     model.addShelter(toAdd);
                 }
             }

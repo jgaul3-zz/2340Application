@@ -1,7 +1,7 @@
 package edu.gatech.cs2340.cs2340application.model;
 
 /**
- * Inteface for the things that Firebase will do.
+ * Interface for the things that Firebase will do.
  *
  * Created by JGaul on 3/13/18.
  */
@@ -14,6 +14,7 @@ public interface DatabaseTools {
      *
      * @param email user's email
      * @param password user's password
+     * @param role user's role
      * @return whether the user was successfully created.
      */
     public boolean createUserEmail(String email, String password, Role role);

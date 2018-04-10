@@ -23,6 +23,11 @@ public enum Gender {
      */
     Gender(String pname) { name = pname; }
 
+    /**
+     * Given a gender, returns opposite.
+     *
+     * @return Opposite gender
+     */
     public Gender opposite() {
         if (this.equals(Gender.MEN)) {
             return Gender.WOMEN;

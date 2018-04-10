@@ -9,7 +9,6 @@
     tools:showIn="@layout/activity_app_screen">
 
     <TextView
-        android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
         android:layout_marginBottom="8dp"
@@ -63,7 +62,8 @@
         android:layout_marginTop="64dp"
         android:text="Display Map"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="36dp" />
 
     <ListView
         android:id="@+id/shelterList"

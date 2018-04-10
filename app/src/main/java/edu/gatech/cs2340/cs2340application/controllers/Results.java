@@ -15,6 +15,9 @@ import edu.gatech.cs2340.cs2340application.R;
 import edu.gatech.cs2340.cs2340application.model.Model;
 import edu.gatech.cs2340.cs2340application.model.Shelter;
 
+/**
+ * displays results
+ */
 public class Results extends AppCompatActivity {
 
     Model model = Model.getInstance();
@@ -24,7 +27,7 @@ public class Results extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.e("HEY", "did it 35");
         setContentView(R.layout.activity_app_screen);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
 
         Button logOut = findViewById(R.id.logout);
         Button searchUp = findViewById(R.id.search);

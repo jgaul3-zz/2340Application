@@ -1,7 +1,7 @@
 package edu.gatech.cs2340.cs2340application.model;
 
 /**
- * Created by charl on 3/16/2018.
+ * Created by charleston on 3/16/2018.
  * This class is meant to handle the many age ranges
  */
 

@@ -25,13 +25,15 @@ import edu.gatech.cs2340.cs2340application.R;
 
 import edu.gatech.cs2340.cs2340application.model.*;
 
+/**
+ * screen where you register
+ */
 public class RegistrationScreen extends AppCompatActivity {
 
     // UI references.
     private EditText mUsernameView;
     private EditText pass;
     private Spinner roleSpin;
-    private FirebaseAuth mAuth;
 
     Model model = Model.getInstance();
 
@@ -46,7 +48,7 @@ public class RegistrationScreen extends AppCompatActivity {
         mUsernameView = findViewById(R.id.input_name);
         pass = findViewById(R.id.input_password);
         roleSpin = findViewById(R.id.typeSpinner);
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Role.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -76,11 +78,11 @@ public class RegistrationScreen extends AppCompatActivity {
         Role role = (Role) roleSpin.getSelectedItem();
 
         boolean nameCheck = !username.isEmpty() && (model.getUserByUsername(username) == model.nullUser);
-        boolean passCheck = !password.isEmpty() && password.length() >= 6;
+        boolean passCheck = !password.isEmpty() && (password.length() >= 6);
 
         if (!nameCheck)
         {
-            Toast.makeText(RegistrationScreen.this, "Username is takn", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegistrationScreen.this, "Username is taken", Toast.LENGTH_SHORT).show();
         }
         else if (!passCheck)
         {
