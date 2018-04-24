@@ -1,8 +1,5 @@
 package edu.gatech.cs2340.cs2340application.model;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Created by Jordan on 2/13/2018.
  *
@@ -169,6 +166,11 @@ public class User {
     public boolean checkPassword(String pass) {
         return pass.equals(_password);
     }
+
+//    public boolean equals(User user)
+//    {
+//        return user.getUsername();
+//    }
 
 
 }

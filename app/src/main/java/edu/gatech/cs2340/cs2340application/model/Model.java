@@ -1,19 +1,6 @@
 package edu.gatech.cs2340.cs2340application.model;
 
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-
-import edu.gatech.cs2340.cs2340application.R;
 
 /**
  * Created by Jordan on 2/13/2018.
@@ -44,6 +31,9 @@ public final class Model {
 
     /**Currently selected user for admin tasks. */
     private User _currentUser;
+    public boolean bannedFlag;
+    public boolean lockoutFlag;
+    public boolean waiting;
 
     /**Currently selected shelter for admin tasks. */
     private Shelter _currentShelter;
@@ -70,10 +60,20 @@ public final class Model {
     /** Null User when user isn't found. */
     public final User nullUser = new User("No such user", "");
 
+    public boolean isNullUser(User user)
+    {
+        return user.equals(nullUser);
+    }
+
     /** Null Shelter when shelter isn't found. */
-    private final Shelter nullShelter = new Shelter(0, "Shelter doesn't exist",
+    private final Shelter nullShelter = new Shelter(-1, "Shelter doesn't exist",
             0, 0, 0, "", "",
             "");
+
+    public boolean isNullShelter(Shelter shelter)
+    {
+        return shelter.equals(nullShelter);
+    }
 
     private Model() {
 
@@ -103,21 +103,21 @@ public final class Model {
     public ArrayList<Shelter> getSearchShelters() { return _searchShelters; }
 
 
-//    /**
-//     * adds a user to the app if they don't already exist.
-//     *
-//     * @param user the user to be added
-//     * @return whether it worked
-//     */
-//    public boolean addUser(User user) {
-//        for (User u : _users )
-//        {
-//            if (u.equals(user)) return false;
-//        }
-//
-//        _users.add(user);
-//        return true;
-//    }
+    /**
+     * adds a user to the app if they don't already exist.
+     *
+     * @param user the user to be added
+     * @return whether it worked
+     */
+    public boolean addUser(User user) {
+        for (User u : _users )
+        {
+            if (u.equals(user)) return false;
+        }
+
+        _users.add(user);
+        return true;
+    }
 //
 //    /**
 //     * removes the supplied user from the database
@@ -190,6 +190,7 @@ public final class Model {
      * @return the shelter or nullShelter
      */
     public Shelter findShelterById(int key) {
+
         for (Shelter d : _shelters) {
             if (d.getKey() == key) return d;
         }
@@ -203,6 +204,11 @@ public final class Model {
      * @return the user or nullUser
      */
     public User getUserByUsername(String name) {
+
+        if (name == null || name.equals(""))
+        {
+            return nullUser;
+        }
 
         for (User u : _users)
         {

@@ -1,28 +1,17 @@
 package edu.gatech.cs2340.cs2340application.controllers;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import edu.gatech.cs2340.cs2340application.R;
 import edu.gatech.cs2340.cs2340application.model.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A that presents a set of application settings. On
@@ -54,11 +43,13 @@ public class SearchSheltersActivity extends AppCompatActivity {
         mAgeRangeView = findViewById(R.id.age_spinner);
         mGenderView = findViewById(R.id.gender_spinner);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Gender.values());
+        ArrayAdapter<String> adapter = new ArrayAdapter(
+                this, android.R.layout.simple_spinner_item, Gender.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mGenderView.setAdapter(adapter);
 
-        ArrayAdapter<String> ageAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, AgeRange.values());
+        ArrayAdapter<String> ageAdapter = new ArrayAdapter(
+                this,android.R.layout.simple_spinner_item, AgeRange.values());
         ageAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mAgeRangeView.setAdapter(ageAdapter);
 
@@ -96,39 +87,24 @@ public class SearchSheltersActivity extends AppCompatActivity {
         for (Shelter shelter: model.getShelters()) {
 
             //Log.e(shelter.getName(), "top of loop");
-            if ((shelterName.equals("")) || (shelter.getName().toLowerCase().contains(shelterName.toLowerCase()))) {
+            if ((shelterName.equals("")) || (shelter.getName()
+                    .toLowerCase().contains(shelterName.toLowerCase()))) {
 
                 for (String restriction: shelter.getRestrictions()) {
-                    if (shelterAgeRange.equals(AgeRange.NA) || restriction.toLowerCase().contains(shelterAgeRange.toString().toLowerCase())) {
-                        if (shelterGender.equals(Gender.NA) || shelter.getRestrictions().contains(shelterGender.toString()) || !(shelter.getRestrictions().contains(shelterGender.opposite().toString()))) {
+                    if (shelterAgeRange.equals(AgeRange.NA) ||
+                            restriction.toLowerCase().contains(
+                                    shelterAgeRange.toString().toLowerCase())) {
+                        if (shelterGender.equals(Gender.NA) ||
+                                shelter.getRestrictions().contains(shelterGender.toString()) ||
+                                !(shelter.getRestrictions().contains(
+                                        shelterGender.opposite().toString()))) {
                             model.addSearchShelter(shelter);
                         }
                     }
                 }
             }
         }
-
-//        if (model.verifyUser(username, password))
-//        {
-//            Intent toApp = new Intent(SearchSheltersActivity.this, AppScreen.class); //Results.class);
-//            SearchSheltersActivity.this.startActivity(toApp);
-//        }
-//        else
-//        {
-//            Toast.makeText(SearchSheltersActivity.this, "Incorrect Info", Toast.LENGTH_SHORT).show();
-//        }
     }
-
-    private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
-    }
-
-    private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
-    }
-
     @Override
     public void onBackPressed() {
         Intent toOpen = new Intent(SearchSheltersActivity.this, AppScreen.class);

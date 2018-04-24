@@ -2,10 +2,8 @@ package edu.gatech.cs2340.cs2340application.controllers;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -14,12 +12,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.FirebaseUser;
 
 import edu.gatech.cs2340.cs2340application.R;
 
@@ -50,7 +43,8 @@ public class RegistrationScreen extends AppCompatActivity {
         roleSpin = findViewById(R.id.typeSpinner);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Role.values());
+        ArrayAdapter<String> adapter = new ArrayAdapter(
+                this, android.R.layout.simple_spinner_item, Role.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         roleSpin.setAdapter(adapter);
 
@@ -59,13 +53,15 @@ public class RegistrationScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent toLogin = new Intent(RegistrationScreen.this, LoginActivity.class);
+                Intent toLogin = new Intent(
+                        RegistrationScreen.this, LoginActivity.class);
                 RegistrationScreen.this.startActivity(toLogin);
             }
         });
 
         final Button button = findViewById(R.id.btn_signup);
         button.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
                 registerUser();
             }
@@ -77,16 +73,19 @@ public class RegistrationScreen extends AppCompatActivity {
         String password = pass.getText().toString();
         Role role = (Role) roleSpin.getSelectedItem();
 
-        boolean nameCheck = !username.isEmpty() && (model.getUserByUsername(username) == model.nullUser);
+        boolean nameCheck = !username.isEmpty()
+                && (model.getUserByUsername(username) == model.nullUser);
         boolean passCheck = !password.isEmpty() && (password.length() >= 6);
 
         if (!nameCheck)
         {
-            Toast.makeText(RegistrationScreen.this, "Username is taken", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegistrationScreen.this,
+                    "Username is taken", Toast.LENGTH_SHORT).show();
         }
         else if (!passCheck)
         {
-            Toast.makeText(RegistrationScreen.this, "Password too short", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegistrationScreen.this,
+                    "Password too short", Toast.LENGTH_SHORT).show();
         }
         else
         {
@@ -94,11 +93,13 @@ public class RegistrationScreen extends AppCompatActivity {
             boolean success = tools.createUserEmail(username, password, role);
             if (success)
             {
-                startActivity(new Intent(RegistrationScreen.this, LoginActivity.class));
+                startActivity(new Intent(
+                        RegistrationScreen.this, LoginActivity.class));
             }
             else
             {
-                Toast.makeText(RegistrationScreen.this, "Error creating user", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegistrationScreen.this,
+                        "Error creating user", Toast.LENGTH_SHORT).show();
             }
         }
     }

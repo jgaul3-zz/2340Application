@@ -1,13 +1,8 @@
 package edu.gatech.cs2340.cs2340application.model;
 
-import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -16,10 +11,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
-
-import edu.gatech.cs2340.cs2340application.controllers.LoginActivity;
-import edu.gatech.cs2340.cs2340application.controllers.RegistrationScreen;
 import edu.gatech.cs2340.cs2340application.model.*;
 
 /**
@@ -51,6 +42,7 @@ public class FirebaseTools implements DatabaseTools {
      * @param password user's password
      * @return whether the user was successfully created.
      */
+    @Override
     public boolean createUserEmail(String email, String password, Role role)
     {
         try
@@ -95,6 +87,7 @@ public class FirebaseTools implements DatabaseTools {
      * @param password user's password
      * @return whether the data matches
      */
+    @Override
     public boolean loginUserEmail(String email, String password)
     {
         if (email == null)
@@ -141,6 +134,7 @@ public class FirebaseTools implements DatabaseTools {
      *
      * @param shelter the shelter to be added
      */
+    @Override
     public void addShelterDatabase(Shelter shelter)
     {
         mDatabase.child("shelters").child("" + shelter.getKey()).setValue(shelter);
@@ -149,6 +143,7 @@ public class FirebaseTools implements DatabaseTools {
     /**
      * Populates the shelter list on login.
      */
+    @Override
     public void loadShelters()
     {
         DatabaseReference shelterRef = mDatabase.child("shelters");
@@ -194,6 +189,7 @@ public class FirebaseTools implements DatabaseTools {
      *
      * @param shelter the shelter to be updated
      */
+    @Override
     public void updateShelter(Shelter shelter)
     {
         mDatabase.child("shelters").child("" + shelter.getKey()).setValue(shelter);
@@ -204,11 +200,123 @@ public class FirebaseTools implements DatabaseTools {
      *
      * @param user the user to be updated
      */
+    @Override
     public void updateUser(User user)
     {
         mDatabase.child("users").child(user.getUsername().replace(".",""))
                 .setValue(user);
     }
 
+    /**
+     *  Sends password reset to selected email.
+     *
+     * @param email email to be reset.
+     */
+    public void resetPassword(String email)
+    {
+        mAuth.sendPasswordResetEmail(email);
+    }
+
+    /**
+     *  Checks whether user is valid using "veteran" tag.
+     *
+     *  @param email user's email
+     */
+    public boolean checkBanned(String email)
+    {
+        model.waiting = true;
+
+        mDatabase.child("users").child(email.replace(".","")).child("veteran")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                model.bannedFlag = dataSnapshot.getValue(Boolean.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                model.bannedFlag = false;
+            }
+        });
+
+        return model.bannedFlag;
+    }
+
+    /**
+     *  Checks whether user has been locked out using "age" tag.
+     *
+     *  @param email user's email
+     */
+    public boolean checkLockout(String email)
+    {
+        final String modEmail = email.replace(".", "");
+
+        mDatabase.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.child(modEmail).exists()) {
+                    int count = snapshot.child(modEmail).child("age").getValue(Integer.class);
+                    model.lockoutFlag = count >= 3;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        model.waiting = false;
+        return model.lockoutFlag;
+
+    }
+
+    /**
+     *  Adds one to "age" tag.
+     *
+     *  @param email user's email
+     */
+    public void addLockout(String email)
+    {
+        final String modEmail = email.replace(".", "");
+
+        mDatabase.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.child(modEmail).exists()) {
+                    int count = snapshot.child(modEmail).child("age").getValue(Integer.class);
+                    mDatabase.child("users").child(modEmail).child("age").setValue(count + 1);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+
+    /**
+     *  Resets "age" tag.
+     *
+     *  @param email user's email
+     */
+    public void resetLockout(String email)
+    {
+        final String modEmail = email.replace(".", "");
+
+        mDatabase.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.child(modEmail).exists()) {
+                    mDatabase.child("users").child(modEmail).child("age").setValue(0);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+    }
 
 }

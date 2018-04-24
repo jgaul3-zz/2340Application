@@ -2,6 +2,7 @@ package edu.gatech.cs2340.cs2340application.model;
 
 /**
  * Created by Jordan on 2/21/2018.
+ *
  */
 
 public enum Role {

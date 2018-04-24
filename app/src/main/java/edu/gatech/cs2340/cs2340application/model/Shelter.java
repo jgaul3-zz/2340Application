@@ -37,7 +37,6 @@ public class Shelter {
     /** this shelter's special notes */
     private String _notes;
 
-    //TODO replace with proper enum for restrictions.
     /** this shelter's restrictions */
     private List<String> _restrictions;
 
@@ -94,8 +93,8 @@ public class Shelter {
     /**
      * Makes a new shelter
      */
-    public Shelter(int key, String name, int capacity, int occupancy, double latitude, double longitude,
-                   String address, String phoneNumber, String notes) {
+    public Shelter(int key, String name, int capacity, int occupancy, double latitude,
+                   double longitude, String address, String phoneNumber, String notes) {
         _key = key;
         _name = name;
         _capacity = capacity;
@@ -113,7 +112,8 @@ public class Shelter {
     /**
      * Makes a new shelter
      */
-    public Shelter(int key, String name, int capacity, double latitude, double longitude, String address,
+    public Shelter(int key, String name, int capacity,
+                   double latitude, double longitude, String address,
                    String phoneNumber, String notes) {
         this(key, name, capacity, 0, latitude, longitude, address, phoneNumber, notes);
     }

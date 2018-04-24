@@ -17,7 +17,7 @@ public interface DatabaseTools {
      * @param role user's role
      * @return whether the user was successfully created.
      */
-    public boolean createUserEmail(String email, String password, Role role);
+    boolean createUserEmail(String email, String password, Role role);
 
     /**
      * Verifies a given email and password combo.
@@ -27,32 +27,66 @@ public interface DatabaseTools {
      * @param password user's password
      * @return whether the data matches
      */
-    public boolean loginUserEmail(String email, String password);
+    boolean loginUserEmail(String email, String password);
 
     /**
      * Adds shelter to database. Should be triggered on every add action
      *
      * @param shelter the shelter to be added
      */
-    public void addShelterDatabase(Shelter shelter);
+    void addShelterDatabase(Shelter shelter);
 
     /**
      * Populates the shelter list on opening.
      */
-    public void loadShelters();
+    void loadShelters();
 
     /**
      * Given a shelter, updates its info in the database.
      *
      * @param shelter the shelter to be updated
      */
-    public void updateShelter(Shelter shelter);
+    void updateShelter(Shelter shelter);
 
     /**
      * Given a user, updates their info in the database.
      *
      * @param user the user to be updated
      */
-    public void updateUser(User user);
+    void updateUser(User user);
 
+    /**
+     *  Sends password reset to selected email.
+     *
+     * @param email email to be reset.
+     */
+     void resetPassword(String email);
+
+    /**
+     *  Checks whether user is valid using "veteran" tag.
+     *
+     *  @param email user's email
+     */
+    public boolean checkBanned(String email);
+
+    /**
+     *  Checks whether user has been locked out using "age" tag.
+     *
+     *  @param email user's email
+     */
+    public boolean checkLockout(String email);
+
+    /**
+     *  Adds one to "age" tag.
+     *
+     *  @param email user's email
+     */
+    public void addLockout(String email);
+
+    /**
+     *  Resets "age" tag.
+     *
+     *  @param email user's email
+     */
+    public void resetLockout(String email);
 }

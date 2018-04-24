@@ -2,8 +2,6 @@ package edu.gatech.cs2340.cs2340application.controllers;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.ArrayAdapter;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -52,7 +50,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         for (Shelter shelter:model.getSearchShelters()) {
             LatLng position = new LatLng(shelter.getLatitude(), shelter.getLongitude());
-            mMap.addMarker(new MarkerOptions().position(position).title(shelter.getName()+ " "+ shelter.getPhoneNumber()));
+            mMap.addMarker(new MarkerOptions().position(position).title(shelter.getName()+
+                    " "+ shelter.getPhoneNumber()));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
         }
     }

@@ -1,32 +1,16 @@
 package edu.gatech.cs2340.cs2340application.controllers;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
-
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -39,8 +23,6 @@ import java.util.Scanner;
 import edu.gatech.cs2340.cs2340application.R;
 import edu.gatech.cs2340.cs2340application.model.*;
 
-import static android.Manifest.permission.READ_CONTACTS;
-
 /**
  * A login screen that offers login via email/password.
  */
@@ -50,12 +32,15 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mUsernameView;
     private EditText mPasswordView;
     private View mProgressView;
+    private DatabaseTools mTools;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setupActionBar();
+
+        mTools = new FirebaseTools();
 
         TextView regButton = findViewById(R.id.regLink);
         regButton.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +75,16 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         View mLoginFormView = findViewById(R.id.login_form);
+
+        TextView resetButton = findViewById(R.id.resetLink);
+        regButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTools.resetLockout(mUsernameView.getText().toString());
+                mTools.resetPassword(mUsernameView.getText().toString());
+                Toast.makeText(LoginActivity.this, "Sending reset email", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**
@@ -120,17 +115,33 @@ public class LoginActivity extends AppCompatActivity {
     private void attemptLogin() {
 
         final Model model = Model.getInstance();
-        DatabaseTools tools = new FirebaseTools();
 
         // Store values at the time of the login attempt.
         String username = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
 
+        boolean bannedTest = false;
+        boolean lockedTest = false;
+        while (model.waiting)
+        {
+            bannedTest = mTools.checkBanned(username);
+            lockedTest = mTools.checkLockout(username);
+        }
+
         if (username.isEmpty() || password.isEmpty()) {
             Toast.makeText(LoginActivity.this, "Field is blank", Toast.LENGTH_SHORT).show();
         }
-        else if (tools.loginUserEmail(username, password))
+        else if (bannedTest)
         {
+            Toast.makeText(LoginActivity.this, "Banned by admin", Toast.LENGTH_SHORT).show();
+        }
+        else if (lockedTest)
+        {
+            Toast.makeText(LoginActivity.this, "Too many password attempts", Toast.LENGTH_SHORT).show();
+        }
+        else if (mTools.loginUserEmail(username, password))
+        {
+            mTools.resetLockout(username);
             if (model.getShelters().isEmpty())
             {
                 Log.e("Login", "DATABASE NOT LOADED CORRECTLY");
@@ -141,6 +152,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         else
         {
+            mTools.addLockout(username);
             Toast.makeText(LoginActivity.this, "Incorrect Info", Toast.LENGTH_SHORT).show();
         }
     }
@@ -166,7 +178,8 @@ public class LoginActivity extends AppCompatActivity {
             Model model = Model.getInstance();
 
             // Opens a file using a Scanner object
-            Scanner scanner = new Scanner(getResources().openRawResource(R.raw.homeless_shelter_database));
+            Scanner scanner = new Scanner(getResources().openRawResource(
+                    R.raw.homeless_shelter_database));
 
             //Skips over the first line
             scanner.nextLine();
@@ -200,7 +213,8 @@ public class LoginActivity extends AppCompatActivity {
                 String notes = line.get(7);
                 Log.e("notes", line.get(7));
 
-                Shelter rick = new Shelter(key, name, capacity, latitude, longitude, address, phoneNumber, notes);
+                Shelter rick = new Shelter(key, name, capacity, latitude,
+                        longitude, address, phoneNumber, notes);
 
                 rick.setRestrictions(parseLine(line.get(3), '/', 'w'));
                 model.addShelter(rick);
@@ -285,7 +299,6 @@ public class LoginActivity extends AppCompatActivity {
 
                 } else if (ch == '\r') {
                     //ignore LF characters
-                    continue;
                 } else if (ch == '\n') {
                     //the end, break!
                     break;
