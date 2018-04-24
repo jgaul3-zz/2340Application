@@ -33,7 +33,8 @@ public final class Model {
     private User _currentUser;
     public boolean bannedFlag;
     public boolean lockoutFlag;
-    public boolean waiting;
+    public boolean loggedInFlag;
+    public String returnMessage;
 
     /**Currently selected shelter for admin tasks. */
     private Shelter _currentShelter;

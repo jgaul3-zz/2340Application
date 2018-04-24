@@ -37,6 +37,11 @@ public interface DatabaseTools {
     void addShelterDatabase(Shelter shelter);
 
     /**
+     * Populates the user list on opening.
+     */
+    void loadUsers();
+
+    /**
      * Populates the shelter list on opening.
      */
     void loadShelters();
@@ -63,30 +68,9 @@ public interface DatabaseTools {
      void resetPassword(String email);
 
     /**
-     *  Checks whether user is valid using "veteran" tag.
-     *
-     *  @param email user's email
+     * updates user's age tag
+     * @param email user's email
+     * @param age new age
      */
-    public boolean checkBanned(String email);
-
-    /**
-     *  Checks whether user has been locked out using "age" tag.
-     *
-     *  @param email user's email
-     */
-    public boolean checkLockout(String email);
-
-    /**
-     *  Adds one to "age" tag.
-     *
-     *  @param email user's email
-     */
-    public void addLockout(String email);
-
-    /**
-     *  Resets "age" tag.
-     *
-     *  @param email user's email
-     */
-    public void resetLockout(String email);
+     void updateAge(String email, int age);
 }

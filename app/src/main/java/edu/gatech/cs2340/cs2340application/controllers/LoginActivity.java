@@ -19,6 +19,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import edu.gatech.cs2340.cs2340application.R;
 import edu.gatech.cs2340.cs2340application.model.*;
@@ -33,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mPasswordView;
     private View mProgressView;
     private DatabaseTools mTools;
+    private Model model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,8 @@ public class LoginActivity extends AppCompatActivity {
         setupActionBar();
 
         mTools = new FirebaseTools();
+        model = Model.getInstance();
+
 
         TextView regButton = findViewById(R.id.regLink);
         regButton.setOnClickListener(new View.OnClickListener() {
@@ -80,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
         regButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mTools.resetLockout(mUsernameView.getText().toString());
+                mTools.updateAge(mUsernameView.getText().toString(), 0);
                 mTools.resetPassword(mUsernameView.getText().toString());
                 Toast.makeText(LoginActivity.this, "Sending reset email", Toast.LENGTH_SHORT).show();
             }
@@ -114,46 +118,40 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void attemptLogin() {
 
-        final Model model = Model.getInstance();
-
         // Store values at the time of the login attempt.
         String username = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
 
-        boolean bannedTest = false;
-        boolean lockedTest = false;
-        while (model.waiting)
-        {
-            bannedTest = mTools.checkBanned(username);
-            lockedTest = mTools.checkLockout(username);
-        }
+        User attempter = model.getUserByUsername(username);
+
+        boolean banCheck = attempter.getVeteran();
+        boolean lockCheck = attempter.getAge() > 2;
+
+        boolean loginResult = mTools.loginUserEmail(username, password);
 
         if (username.isEmpty() || password.isEmpty()) {
             Toast.makeText(LoginActivity.this, "Field is blank", Toast.LENGTH_SHORT).show();
         }
-        else if (bannedTest)
+        else if (banCheck)
         {
-            Toast.makeText(LoginActivity.this, "Banned by admin", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "You've been banned", Toast.LENGTH_SHORT).show();
         }
-        else if (lockedTest)
+        else if (lockCheck)
         {
-            Toast.makeText(LoginActivity.this, "Too many password attempts", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Too many login attempts", Toast.LENGTH_SHORT).show();
         }
-        else if (mTools.loginUserEmail(username, password))
+        else if (loginResult)
         {
-            mTools.resetLockout(username);
-            if (model.getShelters().isEmpty())
-            {
-                Log.e("Login", "DATABASE NOT LOADED CORRECTLY");
-                readSDFile();
-            }
+            attempter.setAge(0);
+            mTools.updateAge(username, 0);
             Intent toApp = new Intent(LoginActivity.this, AppScreen.class);
             LoginActivity.this.startActivity(toApp);
         }
         else
         {
-            mTools.addLockout(username);
-            Toast.makeText(LoginActivity.this, "Incorrect Info", Toast.LENGTH_SHORT).show();
+            attempter.incrementAge();
+            mTools.updateAge(username, attempter.getAge());
+            Toast.makeText(LoginActivity.this, "Incorrect info", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -163,155 +161,5 @@ public class LoginActivity extends AppCompatActivity {
         LoginActivity.this.startActivity(toOpen);
     }
 
-
-    /**
-     * Open the sample.csv file in the /res/raw directory
-     * Line Entry format:
-     *   [0] - name
-     *   [1] - id as a string
-     *
-     */
-    private void readSDFile() {
-
-        try {
-            DatabaseTools tools = new FirebaseTools();
-            Model model = Model.getInstance();
-
-            // Opens a file using a Scanner object
-            Scanner scanner = new Scanner(getResources().openRawResource(
-                    R.raw.homeless_shelter_database));
-
-            //Skips over the first line
-            scanner.nextLine();
-
-
-            while (scanner.hasNext()) {
-                List<String> line = parseLine(scanner.nextLine());
-
-                int key = Integer.parseInt(line.get(0));
-                Log.e("id", line.get(0));
-
-                String name = line.get(1);
-                Log.e("name", line.get(1));
-
-                int capacity = Integer.parseInt(line.get(2));
-                Log.e("capacity", line.get(2));
-
-                //restrictions is 3 (string)
-                double longitude = Double.parseDouble(line.get(4));
-                Log.e("longitude", line.get(4));
-
-                double latitude = Double.parseDouble(line.get(5));
-                Log.e("latitude", line.get(5));
-
-                String address = line.get(6);
-                Log.e("address", line.get(6));
-
-                String phoneNumber = line.get(8);
-                Log.e("phoneNumber", line.get(8));
-
-                String notes = line.get(7);
-                Log.e("notes", line.get(7));
-
-                Shelter rick = new Shelter(key, name, capacity, latitude,
-                        longitude, address, phoneNumber, notes);
-
-                rick.setRestrictions(parseLine(line.get(3), '/', 'w'));
-                model.addShelter(rick);
-                tools.addShelterDatabase(rick);
-            }
-            scanner.close();
-        } catch (Exception e) {
-            Log.e("Login", "error reading assets");
-        }
-
-    }
-
-    /**
-     * parses line of csv file.
-     * @param cvsLine incoming line
-     * @return List of elements of file
-     */
-    public static List<String> parseLine(String cvsLine) {
-        return parseLine(cvsLine, ',', '"');
-    }
-
-    /**
-     * parses line given inputs
-     *
-     * @param cvsLine line itself
-     * @param separators whether commas or something else
-     * @param customQuote How sections are differentiated.
-     * @return the individual components
-     */
-    public static List<String> parseLine(String cvsLine, char separators, char customQuote) {
-
-        List<String> result = new ArrayList<>();
-
-        //if empty, return!
-        if ((cvsLine == null) && cvsLine.isEmpty()) {
-            return result;
-        }
-
-        StringBuffer curVal = new StringBuffer();
-        boolean inQuotes = false;
-        boolean startCollectChar = false;
-        boolean doubleQuotesInColumn = false;
-
-        char[] chars = cvsLine.toCharArray();
-
-        for (char ch : chars) {
-
-            if (inQuotes) {
-                startCollectChar = true;
-                if (ch == customQuote) {
-                    inQuotes = false;
-                    doubleQuotesInColumn = false;
-                } else {
-
-                    //Fixed : allow "" in custom quote enclosed
-                    if (ch == '\"') {
-                        if (!doubleQuotesInColumn) {
-                            curVal.append(ch);
-                            doubleQuotesInColumn = true;
-                        }
-                    } else {
-                        curVal.append(ch);
-                    }
-
-                }
-            } else {
-                if (ch == customQuote) {
-
-                    inQuotes = true;
-
-                    //double quotes in column will hit this!
-                    if (startCollectChar) {
-                        curVal.append('"');
-                    }
-
-                } else if (ch == separators) {
-
-                    result.add(curVal.toString());
-
-                    curVal = new StringBuffer();
-                    startCollectChar = false;
-
-                } else if (ch == '\r') {
-                    //ignore LF characters
-                } else if (ch == '\n') {
-                    //the end, break!
-                    break;
-                } else {
-                    curVal.append(ch);
-                }
-            }
-
-        }
-
-        result.add(curVal.toString());
-
-        return result;
-    }
 }
 

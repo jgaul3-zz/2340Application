@@ -1,8 +1,11 @@
 package edu.gatech.cs2340.cs2340application.model;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -10,6 +13,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.concurrent.Semaphore;
 
 import edu.gatech.cs2340.cs2340application.model.*;
 
@@ -88,7 +93,7 @@ public class FirebaseTools implements DatabaseTools {
      * @return whether the data matches
      */
     @Override
-    public boolean loginUserEmail(String email, String password)
+    public boolean loginUserEmail(final String email, final String password)
     {
         if (email == null)
         {
@@ -119,7 +124,6 @@ public class FirebaseTools implements DatabaseTools {
             Task t = mAuth.signInWithEmailAndPassword(email, password);
             while(!t.isComplete());
             Log.d("FirebaseLogin", "Login Complete");
-            loadShelters();
             return t.isSuccessful();
         }
         catch (Exception e)
@@ -141,6 +145,48 @@ public class FirebaseTools implements DatabaseTools {
     }
 
     /**
+     * Populates the user list on opening.
+     */
+    @Override
+    public void loadUsers()
+    {
+        DatabaseReference shelterRef = mDatabase.child("users");
+
+        shelterRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User toAdd;
+                for (DataSnapshot ds : dataSnapshot.getChildren())
+                {
+                    try
+                    {
+                        toAdd = new User (ds.child("username").getValue(String.class),
+                                ds.child("password").getValue(String.class),
+                                ds.child("name").getValue(String.class),
+                                ds.child("role").getValue(Role.class),
+                                ds.child("gender").getValue(Gender.class),
+                                ds.child("age").getValue(Integer.class),
+                                ds.child("veteran").getValue(Boolean.class),
+                                ds.child("id").getValue(Integer.class));
+                    }
+                    catch (NullPointerException e)
+                    {
+                        Log.e("FirebaseRegistration",
+                                "Null Pointer Exception: " + e.getMessage());
+                        return;
+                    }
+                    model.addUser(toAdd);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("Firebase", "Loading users went wrong: " + databaseError.getMessage());
+            }
+        });
+    }
+
+    /**
      * Populates the shelter list on login.
      */
     @Override
@@ -152,7 +198,6 @@ public class FirebaseTools implements DatabaseTools {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Shelter toAdd;
-                Log.e("database", "Made it again");
                 for (DataSnapshot ds : dataSnapshot.getChildren())
                 {
                     try
@@ -218,105 +263,13 @@ public class FirebaseTools implements DatabaseTools {
     }
 
     /**
-     *  Checks whether user is valid using "veteran" tag.
-     *
-     *  @param email user's email
+     * updates user's age tag
+     * @param email user's email
+     * @param age new age
      */
-    public boolean checkBanned(String email)
+    public void updateAge(String email, int age)
     {
-        model.waiting = true;
-
-        mDatabase.child("users").child(email.replace(".","")).child("veteran")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                model.bannedFlag = dataSnapshot.getValue(Boolean.class);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                model.bannedFlag = false;
-            }
-        });
-
-        return model.bannedFlag;
+        mDatabase.child("users").child(email.replace(".",""))
+                .child("age").setValue(age);
     }
-
-    /**
-     *  Checks whether user has been locked out using "age" tag.
-     *
-     *  @param email user's email
-     */
-    public boolean checkLockout(String email)
-    {
-        final String modEmail = email.replace(".", "");
-
-        mDatabase.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                if (snapshot.child(modEmail).exists()) {
-                    int count = snapshot.child(modEmail).child("age").getValue(Integer.class);
-                    model.lockoutFlag = count >= 3;
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-
-        model.waiting = false;
-        return model.lockoutFlag;
-
-    }
-
-    /**
-     *  Adds one to "age" tag.
-     *
-     *  @param email user's email
-     */
-    public void addLockout(String email)
-    {
-        final String modEmail = email.replace(".", "");
-
-        mDatabase.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                if (snapshot.child(modEmail).exists()) {
-                    int count = snapshot.child(modEmail).child("age").getValue(Integer.class);
-                    mDatabase.child("users").child(modEmail).child("age").setValue(count + 1);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-    }
-
-    /**
-     *  Resets "age" tag.
-     *
-     *  @param email user's email
-     */
-    public void resetLockout(String email)
-    {
-        final String modEmail = email.replace(".", "");
-
-        mDatabase.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                if (snapshot.child(modEmail).exists()) {
-                    mDatabase.child("users").child(modEmail).child("age").setValue(0);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-
-    }
-
 }

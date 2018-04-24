@@ -58,6 +58,7 @@ public class User {
 
     public int getAge() { return _age; }
     public void setAge(int age) { _age = age; }
+    public void incrementAge() { _age = _age + 1; }
 
     public boolean getVeteran() { return _veteran; }
     public void setVeteran(boolean veteran) { _veteran = veteran; }
@@ -87,6 +88,20 @@ public class User {
         /* this user's contact information */
         String _contact = contact;
         _id = User.Next_Id++;
+    }
+
+    public User(String username, String password, String name, Role role, Gender gender,
+                int age, boolean veteran, int id) {
+        _username = username;
+        _password = password;
+        _name = name;
+        _role = role;
+        _gender = gender;
+        _age = age;
+        _veteran = veteran;
+        /* this user's contact information */
+        String _contact = "";
+        _id = id;
     }
 
     /**
