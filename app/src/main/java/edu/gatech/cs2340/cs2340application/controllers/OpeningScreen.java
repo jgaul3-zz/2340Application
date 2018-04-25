@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,9 +34,9 @@ public class OpeningScreen extends AppCompatActivity {
         setContentView(R.layout.activity_opening_screen);
 
         //Prep buttons
-        Button userButton = findViewById(R.id.loginUser);
-        Button registerButton = findViewById(R.id.loginRegister);
-        Button guestButton = findViewById(R.id.loginGuest);
+        ImageButton userButton = findViewById(R.id.loginUser);
+        ImageButton registerButton = findViewById(R.id.loginRegister);
+        ImageButton guestButton = findViewById(R.id.loginGuest);
 
 
         userButton.setOnClickListener(new View.OnClickListener() {

@@ -116,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    private void attemptLogin() {
+    public void attemptLogin() {
 
         // Store values at the time of the login attempt.
         String username = mUsernameView.getText().toString();
