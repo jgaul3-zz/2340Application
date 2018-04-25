@@ -126,7 +126,7 @@ public class User {
      * @param role      the user's role
      */
     public User(String username, String password, String name, Role role) {
-        this(username, password, name, role, Gender.OTHER, 100, false);
+        this(username, password, name, role, Gender.OTHER, 0, false);
     }
 
     /**
@@ -146,7 +146,7 @@ public class User {
      * @param role      the user's role
      */
     public User(String username, String password, Role role) {
-        this(username, password, "", role, Gender.OTHER, 100, false);
+        this(username, password, "", role, Gender.OTHER, 0, false);
     }
 
     /**
